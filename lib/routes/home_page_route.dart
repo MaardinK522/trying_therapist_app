@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:fluttertoast/fluttertoast.dart';
 import '../routes/call_history_page_route.dart';
-import '../routes/medicine_groups_page_route.dart';
-import '../routes/patient_chat_history_page_route.dart';
+import '../windows/medicine_groups_page_window.dart';
+import '../windows/patient_chat_history_page_window.dart';
 import '../routes/scan_page_route.dart';
 import '../routes/search_page_route.dart';
 import '../routes/settings_route_page.dart';
@@ -32,8 +32,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   static const routes = [
     CallHistoryPageRoute(),
-    PatientChatsHistoryPageRoute(),
-    MedicineCoursePageRoute(),
+    PatientChatsHistoryPageWindow(),
+    MedicineCoursePageWindow(),
   ];
   final TextEditingController searchTextFormFieldController =
       TextEditingController();

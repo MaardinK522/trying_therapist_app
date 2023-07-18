@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import '../generated/assets.dart';
 
-class CallPatientPageRoute extends StatefulWidget {
+class CallPatientPageWindow extends StatefulWidget {
   final String patientName;
 
-  const CallPatientPageRoute({
+  const CallPatientPageWindow({
     Key? key,
     required this.patientName,
   }) : super(key: key);
 
   @override
-  State<CallPatientPageRoute> createState() => _CallPatientPageRouteState();
+  State<CallPatientPageWindow> createState() => _CallPatientPageWindowState();
 }
 
-class _CallPatientPageRouteState extends State<CallPatientPageRoute> {
+class _CallPatientPageWindowState extends State<CallPatientPageWindow> {
   bool isMicOn = true;
   bool isSpeakerOn = false;
 

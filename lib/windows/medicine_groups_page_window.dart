@@ -1,24 +1,39 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:therapist_side/viewmodels/medicine_listview_model.dart';
 import '../listview_items/medicine_group_listview_item.dart';
 import '../models/medicine_course_listview_item_model.dart';
 
-class MedicineCoursePageRoute extends StatefulWidget {
-  const MedicineCoursePageRoute({Key? key}) : super(key: key);
+class MedicineCoursePageWindow extends StatefulWidget {
+  const MedicineCoursePageWindow({Key? key}) : super(key: key);
 
   @override
-  State<MedicineCoursePageRoute> createState() =>
-      MedicineCoursePageRouteState();
+  State<MedicineCoursePageWindow> createState() =>
+      MedicineCoursePageWindowState();
 
-  static MedicineCoursePageRouteState? of(BuildContext context) =>
-      context.findAncestorStateOfType<MedicineCoursePageRouteState>();
+  static MedicineCoursePageWindowState? of(BuildContext context) =>
+      context.findAncestorStateOfType<MedicineCoursePageWindowState>();
 }
 
-class MedicineCoursePageRouteState extends State<MedicineCoursePageRoute> {
+class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
   final int itemCount = 5;
-  late List<MedicineCourseListViewItemModel> items = getRandomItems(itemCount);
+  late List<MedicineCourseListViewItemModel> items = List.empty(
+    growable: true,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    attachListItems();
+  }
+
+  void attachListItems() async {
+    items = (await Provider.of<MedicineListViewModel>(context, listen: true)
+        .fetchAllMedicineItems())!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,31 +59,15 @@ class MedicineCoursePageRouteState extends State<MedicineCoursePageRoute> {
                 ? Theme.of(context).colorScheme.primary
                 : Theme.of(context).colorScheme.secondary,
         onPressed: () {
-          setState(() {
-            resetListItems();
-          });
+          Provider.of<MedicineListViewModel>(context).addNew(
+            MedicineCourseListViewItemModel(
+              topic: 'Random topic',
+              medicines: List.generate(Random.secure().nextInt(10),
+                  (index) => getRandString(Random.secure().nextInt(10))),
+            ),
+          );
         },
         child: const Icon(Icons.add_rounded),
-      ),
-    );
-  }
-
-  void resetListItems() {
-    setState(() {
-      items = getRandomItems(itemCount);
-    });
-  }
-
-  getRandomItems(int count) {
-    return List<MedicineCourseListViewItemModel>.generate(
-      count,
-      (index) => MedicineCourseListViewItemModel(
-        topic: "Common cold",
-        isExpanded: false,
-        medicines: List<String>.generate(
-          Random.secure().nextInt(10),
-          (index) => getRandString(10),
-        ),
       ),
     );
   }

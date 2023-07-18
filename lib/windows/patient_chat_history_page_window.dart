@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../listview_items/patient_history_page_route_listview_item.dart';
 
-class PatientChatsHistoryPageRoute extends StatefulWidget {
-  const PatientChatsHistoryPageRoute({Key? key}) : super(key: key);
+class PatientChatsHistoryPageWindow extends StatefulWidget {
+  const PatientChatsHistoryPageWindow({Key? key}) : super(key: key);
 
   @override
-  State<PatientChatsHistoryPageRoute> createState() =>
-      _PatientChatsHistoryPageRouteState();
+  State<PatientChatsHistoryPageWindow> createState() =>
+      _PatientChatsHistoryPageWindowState();
 }
 
-class _PatientChatsHistoryPageRouteState
-    extends State<PatientChatsHistoryPageRoute>
+class _PatientChatsHistoryPageWindowState
+    extends State<PatientChatsHistoryPageWindow>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Timer timer;

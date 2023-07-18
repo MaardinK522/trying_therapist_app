@@ -8,11 +8,11 @@ class MedicineGroupListItemService {
     );
   }
 
-  void addGroup(MedicineCourseListViewItemModel model) {
-    objectBox.store.box<MedicineCourseListViewItemModel>().put(model);
-  }
-
   void deleteGroup(MedicineCourseListViewItemModel model) {
     objectBox.store.box<MedicineCourseListViewItemModel>().remove(model.id);
+  }
+
+  static void add(MedicineCourseListViewItemModel model) {
+    objectBox.store.box<MedicineCourseListViewItemModel>().put(model);
   }
 }
