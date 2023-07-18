@@ -8,6 +8,7 @@ class MedicineListViewModel extends ChangeNotifier {
 
   Future<void> fetchAllMedicineItems() async {
     MedicineGroupListItemService().getAllGroups();
+
     notifyListeners();
   }
 }
