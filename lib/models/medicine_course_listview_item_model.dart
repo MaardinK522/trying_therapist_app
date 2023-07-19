@@ -1,7 +1,7 @@
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class MedicineCourseListViewItemModel {
+class MedicineGroupListViewItemModel {
   @Id()
   int id = 0;
   final String topic;
@@ -9,7 +9,7 @@ class MedicineCourseListViewItemModel {
   @Transient()
   bool? isExpanded;
 
-  MedicineCourseListViewItemModel({
+  MedicineGroupListViewItemModel({
     required this.topic,
     required this.medicines,
     this.isExpanded = false,

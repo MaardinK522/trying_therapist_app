@@ -7,11 +7,11 @@ import 'package:therapist_side/routes/home_page_route.dart';
 
 import 'objectbox/object_box.dart';
 
-late ObjectBox objectBox;
+late Database database;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  objectBox = await ObjectBox.create();
+  database = await Database.create();
   runApp(const MyApp());
 }
 

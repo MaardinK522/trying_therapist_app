@@ -37,31 +37,29 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   ];
   final TextEditingController searchTextFormFieldController =
       TextEditingController();
-  late AppBar _appBar;
 
   @override
   Widget build(BuildContext context) {
-    _appBar = AppBar(
-      title: const Text("TherapistSide"),
-      // shadowColor: Theme.of(context).colorScheme.primary,
-      bottom: TabBar(
-        splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
-        indicatorColor: Theme.of(context).colorScheme.primary,
-        controller: _tabController,
-        isScrollable: true,
-        indicatorSize: TabBarIndicatorSize.label,
-        tabs: items
-            .map<Widget>(
-              (item) => Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(item, style: textStyle)),
-            )
-            .toList(),
-      ),
-      actions: _buildActions,
-    );
     return Scaffold(
-      appBar: _appBar,
+      appBar: AppBar(
+        title: const Text("TherapistSide"),
+        // shadowColor: Theme.of(context).colorScheme.primary,
+        bottom: TabBar(
+          splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
+          indicatorColor: Theme.of(context).colorScheme.primary,
+          controller: _tabController,
+          isScrollable: true,
+          indicatorSize: TabBarIndicatorSize.label,
+          tabs: items
+              .map<Widget>(
+                (item) => Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(item, style: textStyle)),
+              )
+              .toList(),
+        ),
+        actions: _buildActions,
+      ),
       body: TabBarView(
         controller: _tabController,
         children: routes,

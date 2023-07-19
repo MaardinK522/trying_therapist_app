@@ -20,23 +20,23 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 8650434618452904353),
-      name: 'MedicineCourseListViewItemModel',
-      lastPropertyId: const IdUid(3, 6327909229550554017),
+      id: const IdUid(2, 6145695837408192305),
+      name: 'MedicineGroupListViewItemModel',
+      lastPropertyId: const IdUid(3, 816372526415688392),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 8347654834679933989),
+            id: const IdUid(1, 7294565735257676444),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 7173028985818334418),
+            id: const IdUid(2, 6021933507435462884),
             name: 'topic',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 6327909229550554017),
+            id: const IdUid(3, 816372526415688392),
             name: 'medicines',
             type: 30,
             flags: 0)
@@ -65,29 +65,33 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 8650434618452904353),
+      lastEntityId: const IdUid(2, 6145695837408192305),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [],
+      retiredEntityUids: const [8650434618452904353],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [
+        8347654834679933989,
+        7173028985818334418,
+        6327909229550554017
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    MedicineCourseListViewItemModel: EntityDefinition<
-            MedicineCourseListViewItemModel>(
+    MedicineGroupListViewItemModel: EntityDefinition<
+            MedicineGroupListViewItemModel>(
         model: _entities[0],
-        toOneRelations: (MedicineCourseListViewItemModel object) => [],
-        toManyRelations: (MedicineCourseListViewItemModel object) => {},
-        getId: (MedicineCourseListViewItemModel object) => object.id,
-        setId: (MedicineCourseListViewItemModel object, int id) {
+        toOneRelations: (MedicineGroupListViewItemModel object) => [],
+        toManyRelations: (MedicineGroupListViewItemModel object) => {},
+        getId: (MedicineGroupListViewItemModel object) => object.id,
+        setId: (MedicineGroupListViewItemModel object, int id) {
           object.id = id;
         },
-        objectToFB: (MedicineCourseListViewItemModel object, fb.Builder fbb) {
+        objectToFB: (MedicineGroupListViewItemModel object, fb.Builder fbb) {
           final topicOffset = fbb.writeString(object.topic);
           final medicinesOffset = fbb.writeList(
               object.medicines.map(fbb.writeString).toList(growable: false));
@@ -102,7 +106,7 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = MedicineCourseListViewItemModel(
+          final object = MedicineGroupListViewItemModel(
               topic: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               medicines: const fb.ListReader<String>(
@@ -118,18 +122,18 @@ ModelDefinition getObjectBoxModel() {
   return ModelDefinition(model, bindings);
 }
 
-/// [MedicineCourseListViewItemModel] entity fields to define ObjectBox queries.
-class MedicineCourseListViewItemModel_ {
-  /// see [MedicineCourseListViewItemModel.id]
-  static final id = QueryIntegerProperty<MedicineCourseListViewItemModel>(
+/// [MedicineGroupListViewItemModel] entity fields to define ObjectBox queries.
+class MedicineGroupListViewItemModel_ {
+  /// see [MedicineGroupListViewItemModel.id]
+  static final id = QueryIntegerProperty<MedicineGroupListViewItemModel>(
       _entities[0].properties[0]);
 
-  /// see [MedicineCourseListViewItemModel.topic]
-  static final topic = QueryStringProperty<MedicineCourseListViewItemModel>(
+  /// see [MedicineGroupListViewItemModel.topic]
+  static final topic = QueryStringProperty<MedicineGroupListViewItemModel>(
       _entities[0].properties[1]);
 
-  /// see [MedicineCourseListViewItemModel.medicines]
+  /// see [MedicineGroupListViewItemModel.medicines]
   static final medicines =
-      QueryStringVectorProperty<MedicineCourseListViewItemModel>(
+      QueryStringVectorProperty<MedicineGroupListViewItemModel>(
           _entities[0].properties[2]);
 }

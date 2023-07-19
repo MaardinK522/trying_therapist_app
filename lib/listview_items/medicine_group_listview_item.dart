@@ -3,7 +3,7 @@ import '../models/medicine_course_listview_item_model.dart';
 
 class MedicineGroupListviewItemView extends StatefulWidget {
   final int index;
-  final MedicineCourseListViewItemModel item;
+  final MedicineGroupListViewItemModel item;
   final Function? onRemove;
 
   const MedicineGroupListviewItemView({
@@ -42,7 +42,7 @@ class _MedicineGroupListviewItemViewState
             borderRadius: BorderRadius.circular(20),
           ),
           onSelected: (option) {
-            if (option == "delete") widget.onRemove!();
+            if (option == "delete") widget.onRemove!(widget.item.id);
           },
           itemBuilder: (BuildContext context) {
             var options = ["edit", "delete", "share"];
