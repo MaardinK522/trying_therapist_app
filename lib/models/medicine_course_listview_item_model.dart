@@ -6,7 +6,6 @@ class MedicineGroupListViewItemModel {
   int id = 0;
   final String topic;
   final List<String> medicines;
-  @Transient()
   bool? isExpanded;
 
   MedicineGroupListViewItemModel({

@@ -21,10 +21,6 @@ class MedicineCoursePageWindow extends StatefulWidget {
 class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
   final int itemCount = 5;
 
-  // late List<MedicineGroupListViewItemModel> items = List.empty(
-  //   growable: true,
-  // );
-
   @override
   void initState() {
     super.initState();
@@ -85,10 +81,13 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
             database.putItem(
               MedicineGroupListViewItemModel(
                 topic: 'Random topic',
-                medicines: List.generate(Random.secure().nextInt(10),
-                    (index) => getRandString(Random.secure().nextInt(10))),
+                medicines: List.generate(
+                  Random.secure().nextInt(10),
+                  (index) => getRandString(Random.secure().nextInt(10)),
+                ),
               ),
             );
+            attachListItems();
           });
         },
         child: const Icon(Icons.add_rounded),

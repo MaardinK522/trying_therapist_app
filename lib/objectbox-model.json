@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "2:6145695837408192305",
-      "lastPropertyId": "3:816372526415688392",
+      "lastPropertyId": "4:1729858640080741063",
       "name": "MedicineGroupListViewItemModel",
       "properties": [
         {
@@ -23,6 +23,11 @@
           "id": "3:816372526415688392",
           "name": "medicines",
           "type": 30
+        },
+        {
+          "id": "4:1729858640080741063",
+          "name": "isExpanded",
+          "type": 1
         }
       ],
       "relations": []

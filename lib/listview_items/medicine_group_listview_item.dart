@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:therapist_side/main.dart';
 import '../models/medicine_course_listview_item_model.dart';
 
 class MedicineGroupListviewItemView extends StatefulWidget {
@@ -77,6 +78,7 @@ class _MedicineGroupListviewItemViewState
         onExpansionChanged: (state) {
           setState(() {
             widget.item.isExpanded = state;
+            database.putItem(widget.item);
           });
         },
         childrenPadding: const EdgeInsets.all(10),
@@ -86,18 +88,24 @@ class _MedicineGroupListviewItemViewState
             Text(widget.item.topic),
           ],
         ),
-        children: widget.item.medicines
-            .map<Widget>(
-              (name) => Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(name),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            )
-            .toList(),
+        children: _buildItems(),
       ),
     );
+  }
+
+  _buildItems() {
+    int index = 0;
+    return widget.item.medicines.map<Widget>(
+      (name) {
+        index++;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('$index). $name'),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    ).toList();
   }
 }

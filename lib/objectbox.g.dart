@@ -22,7 +22,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(2, 6145695837408192305),
       name: 'MedicineGroupListViewItemModel',
-      lastPropertyId: const IdUid(3, 816372526415688392),
+      lastPropertyId: const IdUid(4, 1729858640080741063),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -39,6 +39,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(3, 816372526415688392),
             name: 'medicines',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1729858640080741063),
+            name: 'isExpanded',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -95,10 +100,11 @@ ModelDefinition getObjectBoxModel() {
           final topicOffset = fbb.writeString(object.topic);
           final medicinesOffset = fbb.writeList(
               object.medicines.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(4);
+          fbb.startTable(5);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, topicOffset);
           fbb.addOffset(2, medicinesOffset);
+          fbb.addBool(3, object.isExpanded);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -112,7 +118,9 @@ ModelDefinition getObjectBoxModel() {
               medicines: const fb.ListReader<String>(
                       fb.StringReader(asciiOptimization: true),
                       lazy: false)
-                  .vTableGet(buffer, rootOffset, 8, []))
+                  .vTableGet(buffer, rootOffset, 8, []),
+              isExpanded: const fb.BoolReader()
+                  .vTableGetNullable(buffer, rootOffset, 10))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -136,4 +144,9 @@ class MedicineGroupListViewItemModel_ {
   static final medicines =
       QueryStringVectorProperty<MedicineGroupListViewItemModel>(
           _entities[0].properties[2]);
+
+  /// see [MedicineGroupListViewItemModel.isExpanded]
+  static final isExpanded =
+      QueryBooleanProperty<MedicineGroupListViewItemModel>(
+          _entities[0].properties[3]);
 }
