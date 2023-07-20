@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:therapist_side/routes/home_page_route.dart';
 
-import 'objectbox/object_box.dart';
+import 'utils/database.dart';
 
 late Database database;
 

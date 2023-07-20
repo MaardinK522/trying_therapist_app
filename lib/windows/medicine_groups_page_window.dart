@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:therapist_side/exclusive_widgets/medince_gruop_bottom_sheets.dart';
 import 'package:therapist_side/main.dart';
 import '../listview_items/medicine_group_listview_item.dart';
 import '../models/medicine_course_listview_item_model.dart';
@@ -19,7 +20,8 @@ class MedicineCoursePageWindow extends StatefulWidget {
 }
 
 class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
-  final int itemCount = 5;
+  final _streamController =
+      StreamController<List<MedicineGroupListViewItemModel>>();
 
   @override
   void initState() {
@@ -27,19 +29,11 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
     attachListItems();
   }
 
-  void attachListItems() {
-    var items = database.getAllItems();
-    _streamController.sink.add(items);
-  }
-
   @override
   void dispose() {
     _streamController.close();
     super.dispose();
   }
-
-  final _streamController =
-      StreamController<List<MedicineGroupListViewItemModel>>();
 
   @override
   Widget build(BuildContext context) {
@@ -77,22 +71,28 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
                 ? Theme.of(context).colorScheme.primary
                 : Theme.of(context).colorScheme.secondary,
         onPressed: () {
-          setState(() {
-            database.putItem(
-              MedicineGroupListViewItemModel(
-                topic: 'Random topic',
-                medicines: List.generate(
-                  Random.secure().nextInt(10),
-                  (index) => getRandString(Random.secure().nextInt(10)),
-                ),
+          showBottomSheet(
+            context: context,
+            enableDrag: false,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+                width: 2,
               ),
-            );
-            attachListItems();
-          });
+              borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+            ),
+            builder: (context) => const MedicineGroupBottomSheets(),
+          );
         },
         child: const Icon(Icons.add_rounded),
       ),
     );
+  }
+
+  void attachListItems() {
+    var items = database.getAllItems();
+    _streamController.sink.add(items);
   }
 
   String getRandString(int len) {
