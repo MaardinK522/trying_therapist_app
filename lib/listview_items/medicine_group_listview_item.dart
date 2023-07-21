@@ -62,7 +62,7 @@ class _MedicineGroupListviewItemViewState
                   ),
                 ),
                 builder: (context) => MedicineGroupBottomSheets(
-                  topicName:widget.item.topic,
+                  topicName: widget.item.topic,
                   medicineChipsList: widget.item.medicines,
                   updateParent: widget.updateParent,
                 ),

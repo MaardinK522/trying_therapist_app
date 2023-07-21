@@ -33,6 +33,7 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
 
   @override
   Widget build(BuildContext context) {
+    int index = 0;
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Padding(
@@ -100,21 +101,23 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                   const SizedBox(height: 10),
                   Expanded(
                     child: ListView(
-                      children: widget.medicineChipsList
-                          .map<Widget>(
-                            (name) => ListTile(
-                              title: Text(name),
-                              trailing: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    widget.medicineChipsList.remove(name);
-                                  });
-                                },
-                                icon: const Icon(Icons.delete_rounded),
-                              ),
+                      children: widget.medicineChipsList.map<Widget>(
+                        (name) {
+                          index++;
+                          return ListTile(
+                            leading: Text('$index'),
+                            title: Text(name),
+                            trailing: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  widget.medicineChipsList.remove(name);
+                                });
+                              },
+                              icon: const Icon(Icons.delete_rounded),
                             ),
-                          )
-                          .toList(),
+                          );
+                        },
+                      ).toList(),
                     ),
                   ),
                 ],
