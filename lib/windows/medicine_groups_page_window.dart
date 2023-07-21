@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:therapist_side/exclusive_widgets/medince_gruop_bottom_sheets.dart';
 import 'package:therapist_side/main.dart';
+import '../exclusive_widgets/medince_gruop_bottom_sheets.dart';
 import '../listview_items/medicine_group_listview_item.dart';
 import '../models/medicine_course_listview_item_model.dart';
 
@@ -38,6 +38,7 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: StreamBuilder<List<MedicineGroupListViewItemModel>>(
           stream: _streamController.stream,
           builder: (context, snapshot) {
@@ -55,6 +56,7 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
                     },
                     item: snapshot.data![index],
                     index: index,
+                    updateParent: renderAgain,
                   );
                 },
               );
@@ -71,23 +73,35 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
                 ? Theme.of(context).colorScheme.primary
                 : Theme.of(context).colorScheme.secondary,
         onPressed: () {
-          showBottomSheet(
+          showModalBottomSheet(
             context: context,
-            enableDrag: false,
+            isScrollControlled: true,
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.secondary,
                 width: 2,
               ),
               borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+                topRight: Radius.circular(20),
+                topLeft: Radius.circular(20),
+              ),
             ),
-            builder: (context) => const MedicineGroupBottomSheets(),
+            builder: (context) => MedicineGroupBottomSheets(
+              medicineChipsList: const [],
+              updateParent: renderAgain,
+              topicName: '',
+            ),
           );
         },
         child: const Icon(Icons.add_rounded),
       ),
     );
+  }
+
+  void renderAgain() {
+    setState(() {
+      // Nothing
+    });
   }
 
   void attachListItems() {

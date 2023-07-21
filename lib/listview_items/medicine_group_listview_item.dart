@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:therapist_side/main.dart';
+import '../exclusive_widgets/medince_gruop_bottom_sheets.dart';
 import '../models/medicine_course_listview_item_model.dart';
 
 class MedicineGroupListviewItemView extends StatefulWidget {
   final int index;
   final MedicineGroupListViewItemModel item;
-  final Function? onRemove;
+  final Function onRemove;
+  final Function updateParent;
 
   const MedicineGroupListviewItemView({
     Key? key,
     required this.item,
     required this.index,
     required this.onRemove,
+    required this.updateParent,
   }) : super(key: key);
 
   @override
@@ -43,7 +46,28 @@ class _MedicineGroupListviewItemViewState
             borderRadius: BorderRadius.circular(20),
           ),
           onSelected: (option) {
-            if (option == "delete") widget.onRemove!(widget.item.id);
+            if (option == "delete") widget.onRemove(widget.item.id);
+            if (option == 'edit') {
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Theme.of(context).colorScheme.secondary,
+                    width: 2,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                ),
+                builder: (context) => MedicineGroupBottomSheets(
+                  topicName:widget.item.topic,
+                  medicineChipsList: widget.item.medicines,
+                  updateParent: widget.updateParent,
+                ),
+              );
+            }
           },
           itemBuilder: (BuildContext context) {
             var options = ["edit", "delete", "share"];

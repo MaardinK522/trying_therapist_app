@@ -4,7 +4,16 @@ import '../main.dart';
 import '../models/medicine_course_listview_item_model.dart';
 
 class MedicineGroupBottomSheets extends StatefulWidget {
-  const MedicineGroupBottomSheets({super.key});
+  final List<String> medicineChipsList;
+  final Function updateParent;
+  final String topicName;
+
+  const MedicineGroupBottomSheets({
+    super.key,
+    required this.medicineChipsList,
+    required this.updateParent,
+    required this.topicName,
+  });
 
   @override
   State<MedicineGroupBottomSheets> createState() =>
@@ -15,79 +24,100 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
   final TextEditingController topicNameTextController = TextEditingController();
   final TextEditingController medicineNameTextController =
       TextEditingController();
-  List<String> medicineChipsList = List.empty(growable: true);
+
+  @override
+  void initState() {
+    topicNameTextController.text = widget.topicName;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
-      child: Container(
+      child: Padding(
         padding: const EdgeInsets.all(10),
-        height: MediaQuery.of(context).size.height * 0.73,
         child: Column(
           children: [
+            SizedBox(height: MediaQuery.of(context).padding.top + 50),
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    const Center(
-                      child: Text(
-                        "ADD NEW SHORTCUT",
-                        style: TextStyle(fontSize: 18),
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  const Center(
+                    child: Text(
+                      "ADD NEW SHORTCUT",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextField(
+                    textInputAction: TextInputAction.next,
+                    controller: topicNameTextController,
+                    decoration: InputDecoration(
+                      hintText: "Shortcut name",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 2,
+                            color: Theme.of(context).colorScheme.secondary),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      controller: topicNameTextController,
-                      decoration: InputDecoration(
-                        hintText: "Shortcut name",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 2,
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextField(
-                      controller: medicineNameTextController,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.add_rounded),
-                          onPressed: () {
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: medicineNameTextController,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.add_rounded),
+                        onPressed: () {
+                          if (medicineNameTextController.text.isNotEmpty) {
                             setState(() {
-                              medicineChipsList
-                                  .add(medicineNameTextController.text.trim());
+                              var value =
+                                  medicineNameTextController.text.trim();
+                              widget.medicineChipsList.add(value);
+                              medicineNameTextController.clear();
+                              FocusScope.of(context).unfocus();
                             });
-                          },
-                        ),
-                        hintText: "Medicine name",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 2,
-                              color: Theme.of(context).colorScheme.primary),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                          }
+                        },
+                      ),
+                      hintText: "Medicine name",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 2,
+                            color: Theme.of(context).colorScheme.secondary),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    // TODO add chips views for medicine names
-                    Wrap(
-                      children: medicineChipsList
+                  ),
+                  const SizedBox(height: 10),
+                  Expanded(
+                    child: ListView(
+                      children: widget.medicineChipsList
                           .map<Widget>(
-                            (name) => Chip(label: Text(name)),
+                            (name) => ListTile(
+                              title: Text(name),
+                              trailing: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    widget.medicineChipsList.remove(name);
+                                  });
+                                },
+                                icon: const Icon(Icons.delete_rounded),
+                              ),
+                            ),
                           )
                           .toList(),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 10),
@@ -111,15 +141,15 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                 Expanded(
                   child: FilledButton.tonal(
                     onPressed: () {
-                      // TODO : Add item to database
                       if (topicNameTextController.text.isNotEmpty) {
                         database.putItem(
                           MedicineGroupListViewItemModel(
                             topic: topicNameTextController.text.trim(),
-                            medicines: medicineChipsList,
+                            medicines: widget.medicineChipsList,
                           ),
                         );
                         Navigator.pop(context);
+                        widget.updateParent();
                       }
                     },
                     child: const Row(
