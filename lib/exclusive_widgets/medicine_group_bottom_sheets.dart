@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-
-import '../main.dart';
+import 'package:provider/provider.dart';
+import '../providers/medicine_listview_provider.dart';
 import '../models/medicine_course_listview_item_model.dart';
 
 class MedicineGroupBottomSheets extends StatefulWidget {
-  final List<String> medicineChipsList;
-  final Function updateParent;
-  final String topicName;
+  final MedicineGroupListViewItemModel item;
 
   const MedicineGroupBottomSheets({
     super.key,
-    required this.medicineChipsList,
-    required this.updateParent,
-    required this.topicName,
+    required this.item,
   });
 
   @override
@@ -24,10 +20,14 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
   final TextEditingController topicNameTextController = TextEditingController();
   final TextEditingController medicineNameTextController =
       TextEditingController();
+  late List<String> medicineChipsList = List<String>.empty(growable: true);
 
   @override
   void initState() {
-    topicNameTextController.text = widget.topicName;
+    topicNameTextController.text = widget.item.topic;
+    if (widget.item.medicines.isNotEmpty) {
+      medicineChipsList = widget.item.medicines;
+    }
     super.initState();
   }
 
@@ -77,9 +77,9 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                         onPressed: () {
                           if (medicineNameTextController.text.isNotEmpty) {
                             setState(() {
-                              var value =
-                                  medicineNameTextController.text.trim();
-                              widget.medicineChipsList.add(value);
+                              medicineChipsList.add(
+                                medicineNameTextController.text.trim(),
+                              );
                               medicineNameTextController.clear();
                               FocusScope.of(context).unfocus();
                             });
@@ -101,7 +101,7 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                   const SizedBox(height: 10),
                   Expanded(
                     child: ListView(
-                      children: widget.medicineChipsList.map<Widget>(
+                      children: medicineChipsList.map<Widget>(
                         (name) {
                           index++;
                           return ListTile(
@@ -110,7 +110,7 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                             trailing: IconButton(
                               onPressed: () {
                                 setState(() {
-                                  widget.medicineChipsList.remove(name);
+                                  medicineChipsList.remove(name);
                                 });
                               },
                               icon: const Icon(Icons.delete_rounded),
@@ -145,14 +145,14 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                   child: FilledButton.tonal(
                     onPressed: () {
                       if (topicNameTextController.text.isNotEmpty) {
-                        database.putItem(
+                        Provider.of<MedicineGroupListViewProvider>(context,listen: false)
+                            .addItemToList(
                           MedicineGroupListViewItemModel(
                             topic: topicNameTextController.text.trim(),
-                            medicines: widget.medicineChipsList,
+                            medicines: medicineChipsList,
                           ),
                         );
                         Navigator.pop(context);
-                        widget.updateParent();
                       }
                     },
                     child: const Row(

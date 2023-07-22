@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:therapist_side/main.dart';
-import '../exclusive_widgets/medince_gruop_bottom_sheets.dart';
+import 'package:provider/provider.dart';
+import 'package:therapist_side/providers/medicine_listview_provider.dart';
+import '../exclusive_widgets/medicine_group_bottom_sheets.dart';
 import '../listview_items/medicine_group_listview_item.dart';
 import '../models/medicine_course_listview_item_model.dart';
 
@@ -22,11 +22,21 @@ class MedicineCoursePageWindow extends StatefulWidget {
 class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
   final _streamController =
       StreamController<List<MedicineGroupListViewItemModel>>();
+  late Timer timer;
 
   @override
   void initState() {
     super.initState();
-    attachListItems();
+    timer = Timer(
+      Duration(milliseconds: Random().nextInt(1000)),
+      () {
+        Provider.of<MedicineGroupListViewProvider>(context, listen: false)
+            .updateAllMedicineGroupItems();
+        _streamController.sink.add(
+          MedicineGroupListViewProvider.medicineGroupsItems,
+        );
+      },
+    );
   }
 
   @override
@@ -37,81 +47,67 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: StreamBuilder<List<MedicineGroupListViewItemModel>>(
-          stream: _streamController.stream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                padding: const EdgeInsets.only(top: 20),
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return MedicineGroupListviewItemView(
-                    onRemove: (id) {
-                      setState(() {
-                        database.removeItem(id);
+    return Consumer<MedicineGroupListViewProvider>(
+        builder: (BuildContext context, value, Widget? child) {
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: StreamBuilder<List<MedicineGroupListViewItemModel>>(
+            stream: _streamController.stream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  padding: const EdgeInsets.only(top: 20),
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (context, index) {
+                    return MedicineGroupListviewItemView(
+                      onRemove: (id) {
+                        Provider.of<MedicineGroupListViewProvider>(context,
+                                listen: false)
+                            .deleteItem(id);
                         snapshot.data?.removeAt(index);
-                      });
-                    },
-                    item: snapshot.data![index],
-                    index: index,
-                    updateParent: renderAgain,
-                  );
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('${snapshot.error}'),
-              );
-            }
-            return const Center(child: CircularProgressIndicator());
-          }),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor:
-            (Theme.of(context).colorScheme.brightness != Brightness.dark)
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.secondary,
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.secondary,
-                width: 2,
+                      },
+                      item: snapshot.data![index],
+                      index: index,
+                    );
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('${snapshot.error}'),
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            }),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor:
+              (Theme.of(context).colorScheme.brightness != Brightness.dark)
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.secondary,
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: Theme.of(context).colorScheme.secondary,
+                  width: 2,
+                ),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                ),
               ),
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(20),
-                topLeft: Radius.circular(20),
+              builder: (context) => MedicineGroupBottomSheets(
+                item: MedicineGroupListViewItemModel(
+                  topic: '',
+                  medicines: const <String>[].toList(growable: true),
+                ),
               ),
-            ),
-            builder: (context) => MedicineGroupBottomSheets(
-              medicineChipsList: const [],
-              updateParent: renderAgain,
-              topicName: '',
-            ),
-          );
-        },
-        child: const Icon(Icons.add_rounded),
-      ),
-    );
-  }
-
-  void renderAgain() {
-    setState(() {
-      // Nothing
+            );
+          },
+          child: const Icon(Icons.add_rounded),
+        ),
+      );
     });
-  }
-
-  void attachListItems() {
-    var items = database.getAllItems();
-    _streamController.sink.add(items);
-  }
-
-  String getRandString(int len) {
-    var random = Random.secure();
-    var values = List<int>.generate(len, (i) => random.nextInt(255));
-    return base64UrlEncode(values);
   }
 }

@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:therapist_side/main.dart';
-import '../exclusive_widgets/medince_gruop_bottom_sheets.dart';
+import '../exclusive_widgets/medicine_group_bottom_sheets.dart';
 import '../models/medicine_course_listview_item_model.dart';
 
 class MedicineGroupListviewItemView extends StatefulWidget {
   final int index;
   final MedicineGroupListViewItemModel item;
   final Function onRemove;
-  final Function updateParent;
 
   const MedicineGroupListviewItemView({
     Key? key,
     required this.item,
     required this.index,
     required this.onRemove,
-    required this.updateParent,
   }) : super(key: key);
 
   @override
@@ -62,9 +60,7 @@ class _MedicineGroupListviewItemViewState
                   ),
                 ),
                 builder: (context) => MedicineGroupBottomSheets(
-                  topicName: widget.item.topic,
-                  medicineChipsList: widget.item.medicines,
-                  updateParent: widget.updateParent,
+                  item:widget.item
                 ),
               );
             }

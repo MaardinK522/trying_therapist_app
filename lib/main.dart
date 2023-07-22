@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:therapist_side/providers/medicine_listview_provider.dart';
 import 'package:therapist_side/routes/home_page_route.dart';
 
 import 'utils/database.dart';
@@ -151,12 +153,18 @@ class MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
       ),
     );
-    return MaterialApp(
-      title: 'TherapistSide',
-      theme: _lightTheme,
-      darkTheme: _darkTheme,
-      themeMode: _appThemeMode,
-      home: const MyHomePage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<MedicineGroupListViewProvider>(
+            create: (_) => MedicineGroupListViewProvider()),
+      ],
+      child: MaterialApp(
+        title: 'TherapistSide',
+        theme: _lightTheme,
+        darkTheme: _darkTheme,
+        themeMode: _appThemeMode,
+        home: const MyHomePage(),
+      ),
     );
   }
 
