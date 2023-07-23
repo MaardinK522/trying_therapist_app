@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/medicine_listview_provider.dart';
-import '../models/medicine_course_listview_item_model.dart';
+import '../models/medicine_course_item_model.dart';
 
 class MedicineGroupBottomSheets extends StatefulWidget {
-  final MedicineGroupListViewItemModel item;
+  final MedicineGroupItemModel item;
 
   const MedicineGroupBottomSheets({
     super.key,
@@ -147,7 +147,7 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                       if (topicNameTextController.text.isNotEmpty) {
                         Provider.of<MedicineGroupListViewProvider>(context,listen: false)
                             .addItemToList(
-                          MedicineGroupListViewItemModel(
+                          MedicineGroupItemModel(
                             topic: topicNameTextController.text.trim(),
                             medicines: medicineChipsList,
                           ),

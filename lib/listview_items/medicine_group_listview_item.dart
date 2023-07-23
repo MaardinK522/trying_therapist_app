@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:therapist_side/main.dart';
 import '../exclusive_widgets/medicine_group_bottom_sheets.dart';
-import '../models/medicine_course_listview_item_model.dart';
+import '../models/medicine_course_item_model.dart';
 
 class MedicineGroupListviewItemView extends StatefulWidget {
   final int index;
-  final MedicineGroupListViewItemModel item;
+  final MedicineGroupItemModel item;
   final Function onRemove;
 
   const MedicineGroupListviewItemView({
@@ -59,9 +59,8 @@ class _MedicineGroupListviewItemViewState
                     topLeft: Radius.circular(20),
                   ),
                 ),
-                builder: (context) => MedicineGroupBottomSheets(
-                  item:widget.item
-                ),
+                builder: (context) =>
+                    MedicineGroupBottomSheets(item: widget.item),
               );
             }
           },
@@ -98,7 +97,7 @@ class _MedicineGroupListviewItemViewState
         onExpansionChanged: (state) {
           setState(() {
             widget.item.isExpanded = state;
-            database.putItem(widget.item);
+            database.putItem<MedicineGroupItemModel>(widget.item);
           });
         },
         childrenPadding: const EdgeInsets.all(10),

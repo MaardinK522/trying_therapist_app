@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:therapist_side/providers/call_history_provider.dart';
 import 'package:therapist_side/providers/medicine_listview_provider.dart';
 import 'package:therapist_side/routes/home_page_route.dart';
 
@@ -157,6 +158,8 @@ class MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<MedicineGroupListViewProvider>(
             create: (_) => MedicineGroupListViewProvider()),
+        ChangeNotifierProvider<CallHistoryItemProvider>(
+            create: (_) => CallHistoryItemProvider()),
       ],
       child: MaterialApp(
         title: 'TherapistSide',

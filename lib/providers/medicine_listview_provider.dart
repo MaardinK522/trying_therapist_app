@@ -1,23 +1,23 @@
 import 'package:flutter/widgets.dart';
 import 'package:therapist_side/main.dart';
 
-import '../models/medicine_course_listview_item_model.dart';
+import '../models/medicine_course_item_model.dart';
 
 class MedicineGroupListViewProvider extends ChangeNotifier {
-  static late List<MedicineGroupListViewItemModel> medicineGroupsItems;
+  static late List<MedicineGroupItemModel> medicineGroupsItems;
 
-  void updateAllMedicineGroupItems() {
-    medicineGroupsItems = database.getAllItems();
+  Future<void> updateAllMedicineGroupItems() async {
+    medicineGroupsItems = database.getAllItems<MedicineGroupItemModel>();
     notifyListeners();
   }
 
-  Future<void> addItemToList(MedicineGroupListViewItemModel item) async {
-    database.putItem(item);
+  Future<void> addItemToList(MedicineGroupItemModel item) async {
+    database.putItem<MedicineGroupItemModel>(item);
     notifyListeners();
   }
 
   Future<void> deleteItem(int id) async {
-    database.removeItem(id);
+    database.removeItem<MedicineGroupItemModel>(id);
     notifyListeners();
   }
 }

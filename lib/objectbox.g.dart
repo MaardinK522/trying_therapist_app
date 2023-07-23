@@ -14,36 +14,61 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'models/medicine_course_listview_item_model.dart';
+import 'models/call_history_item_model.dart';
+import 'models/medicine_course_item_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(2, 6145695837408192305),
-      name: 'MedicineGroupListViewItemModel',
-      lastPropertyId: const IdUid(4, 1729858640080741063),
+      id: const IdUid(3, 8027214234248683554),
+      name: 'MedicineGroupItemModel',
+      lastPropertyId: const IdUid(4, 1379912020908502164),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 7294565735257676444),
+            id: const IdUid(1, 5138091674674432502),
             name: 'id',
             type: 6,
-            flags: 1),
+            flags: 129),
         ModelProperty(
-            id: const IdUid(2, 6021933507435462884),
+            id: const IdUid(2, 8827034760457528428),
             name: 'topic',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 816372526415688392),
+            id: const IdUid(3, 9029017546592320138),
             name: 'medicines',
             type: 30,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 1729858640080741063),
+            id: const IdUid(4, 1379912020908502164),
             name: 'isExpanded',
             type: 1,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(4, 9073091288297953078),
+      name: 'CallHistoryItemModel',
+      lastPropertyId: const IdUid(3, 4525596011742575970),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 6346513096194227888),
+            name: 'id',
+            type: 6,
+            flags: 129),
+        ModelProperty(
+            id: const IdUid(2, 3662792875235403304),
+            name: 'personName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 4525596011742575970),
+            name: 'calledTime',
+            type: 10,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -70,16 +95,20 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(2, 6145695837408192305),
+      lastEntityId: const IdUid(4, 9073091288297953078),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [8650434618452904353],
+      retiredEntityUids: const [8650434618452904353, 6145695837408192305],
       retiredIndexUids: const [],
       retiredPropertyUids: const [
         8347654834679933989,
         7173028985818334418,
-        6327909229550554017
+        6327909229550554017,
+        7294565735257676444,
+        6021933507435462884,
+        816372526415688392,
+        1729858640080741063
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -87,16 +116,15 @@ ModelDefinition getObjectBoxModel() {
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    MedicineGroupListViewItemModel: EntityDefinition<
-            MedicineGroupListViewItemModel>(
+    MedicineGroupItemModel: EntityDefinition<MedicineGroupItemModel>(
         model: _entities[0],
-        toOneRelations: (MedicineGroupListViewItemModel object) => [],
-        toManyRelations: (MedicineGroupListViewItemModel object) => {},
-        getId: (MedicineGroupListViewItemModel object) => object.id,
-        setId: (MedicineGroupListViewItemModel object, int id) {
+        toOneRelations: (MedicineGroupItemModel object) => [],
+        toManyRelations: (MedicineGroupItemModel object) => {},
+        getId: (MedicineGroupItemModel object) => object.id,
+        setId: (MedicineGroupItemModel object, int id) {
           object.id = id;
         },
-        objectToFB: (MedicineGroupListViewItemModel object, fb.Builder fbb) {
+        objectToFB: (MedicineGroupItemModel object, fb.Builder fbb) {
           final topicOffset = fbb.writeString(object.topic);
           final medicinesOffset = fbb.writeList(
               object.medicines.map(fbb.writeString).toList(growable: false));
@@ -112,7 +140,7 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = MedicineGroupListViewItemModel(
+          final object = MedicineGroupItemModel(
               topic: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               medicines: const fb.ListReader<String>(
@@ -124,29 +152,72 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
+        }),
+    CallHistoryItemModel: EntityDefinition<CallHistoryItemModel>(
+        model: _entities[1],
+        toOneRelations: (CallHistoryItemModel object) => [],
+        toManyRelations: (CallHistoryItemModel object) => {},
+        getId: (CallHistoryItemModel object) => object.id,
+        setId: (CallHistoryItemModel object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CallHistoryItemModel object, fb.Builder fbb) {
+          final personNameOffset = fbb.writeString(object.personName);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, personNameOffset);
+          fbb.addInt64(2, object.calledTime.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = CallHistoryItemModel(
+              personName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              calledTime: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
         })
   };
 
   return ModelDefinition(model, bindings);
 }
 
-/// [MedicineGroupListViewItemModel] entity fields to define ObjectBox queries.
-class MedicineGroupListViewItemModel_ {
-  /// see [MedicineGroupListViewItemModel.id]
-  static final id = QueryIntegerProperty<MedicineGroupListViewItemModel>(
-      _entities[0].properties[0]);
+/// [MedicineGroupItemModel] entity fields to define ObjectBox queries.
+class MedicineGroupItemModel_ {
+  /// see [MedicineGroupItemModel.id]
+  static final id =
+      QueryIntegerProperty<MedicineGroupItemModel>(_entities[0].properties[0]);
 
-  /// see [MedicineGroupListViewItemModel.topic]
-  static final topic = QueryStringProperty<MedicineGroupListViewItemModel>(
-      _entities[0].properties[1]);
+  /// see [MedicineGroupItemModel.topic]
+  static final topic =
+      QueryStringProperty<MedicineGroupItemModel>(_entities[0].properties[1]);
 
-  /// see [MedicineGroupListViewItemModel.medicines]
-  static final medicines =
-      QueryStringVectorProperty<MedicineGroupListViewItemModel>(
-          _entities[0].properties[2]);
+  /// see [MedicineGroupItemModel.medicines]
+  static final medicines = QueryStringVectorProperty<MedicineGroupItemModel>(
+      _entities[0].properties[2]);
 
-  /// see [MedicineGroupListViewItemModel.isExpanded]
+  /// see [MedicineGroupItemModel.isExpanded]
   static final isExpanded =
-      QueryBooleanProperty<MedicineGroupListViewItemModel>(
-          _entities[0].properties[3]);
+      QueryBooleanProperty<MedicineGroupItemModel>(_entities[0].properties[3]);
+}
+
+/// [CallHistoryItemModel] entity fields to define ObjectBox queries.
+class CallHistoryItemModel_ {
+  /// see [CallHistoryItemModel.id]
+  static final id =
+      QueryIntegerProperty<CallHistoryItemModel>(_entities[1].properties[0]);
+
+  /// see [CallHistoryItemModel.personName]
+  static final personName =
+      QueryStringProperty<CallHistoryItemModel>(_entities[1].properties[1]);
+
+  /// see [CallHistoryItemModel.calledTime]
+  static final calledTime =
+      QueryIntegerProperty<CallHistoryItemModel>(_entities[1].properties[2]);
 }

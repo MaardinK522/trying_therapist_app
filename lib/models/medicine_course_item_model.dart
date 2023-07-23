@@ -1,14 +1,14 @@
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class MedicineGroupListViewItemModel {
-  @Id()
+class MedicineGroupItemModel {
+  @Id(assignable: true)
   int id = 0;
   final String topic;
   final List<String> medicines;
   bool? isExpanded;
 
-  MedicineGroupListViewItemModel({
+  MedicineGroupItemModel({
     required this.topic,
     required this.medicines,
     this.isExpanded = false,
