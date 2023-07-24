@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:therapist_side/providers/call_history_provider.dart';
+import 'package:therapist_side/providers/chat_history_provider.dart';
 import 'package:therapist_side/providers/medicine_listview_provider.dart';
 import 'package:therapist_side/routes/home_page_route.dart';
 
@@ -128,6 +129,18 @@ class MyAppState extends State<MyApp> {
     );
   }
 
+  var itemProvider = [
+    ChangeNotifierProvider<MedicineGroupListViewProvider>(
+      create: (_) => MedicineGroupListViewProvider(),
+    ),
+    ChangeNotifierProvider<CallHistoryItemProvider>(
+      create: (_) => CallHistoryItemProvider(),
+    ),
+    ChangeNotifierProvider<ChatHistoryProvider>(
+      create: (_) => ChatHistoryProvider(),
+    ),
+  ];
+
   @override
   void initState() {
     Timer(const Duration(seconds: 1), () {
@@ -155,12 +168,7 @@ class MyAppState extends State<MyApp> {
       ),
     );
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<MedicineGroupListViewProvider>(
-            create: (_) => MedicineGroupListViewProvider()),
-        ChangeNotifierProvider<CallHistoryItemProvider>(
-            create: (_) => CallHistoryItemProvider()),
-      ],
+      providers: itemProvider,
       child: MaterialApp(
         title: 'TherapistSide',
         theme: _lightTheme,

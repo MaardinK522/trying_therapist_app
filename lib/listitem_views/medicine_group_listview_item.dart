@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:therapist_side/exclusive_widgets/medicine_group_bottom_sheets.dart';
 import 'package:therapist_side/main.dart';
-import '../exclusive_widgets/medicine_group_bottom_sheets.dart';
-import '../models/medicine_course_item_model.dart';
+import 'package:therapist_side/models/medicine_course_item_model.dart';
 
 class MedicineGroupListviewItemView extends StatefulWidget {
   final int index;

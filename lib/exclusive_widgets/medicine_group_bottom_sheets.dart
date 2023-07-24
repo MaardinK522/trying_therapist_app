@@ -145,7 +145,8 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                   child: FilledButton.tonal(
                     onPressed: () {
                       if (topicNameTextController.text.isNotEmpty) {
-                        Provider.of<MedicineGroupListViewProvider>(context,listen: false)
+                        Provider.of<MedicineGroupListViewProvider>(context,
+                                listen: false)
                             .addItemToList(
                           MedicineGroupItemModel(
                             topic: topicNameTextController.text.trim(),

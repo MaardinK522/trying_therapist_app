@@ -87,7 +87,7 @@ class SignupPageRoute extends StatelessWidget {
                       child: Row(
                         children: [
                           Image.asset(
-                            Assets.facebook,
+                            Assets.assetsFacebook,
                             fit: BoxFit.fill,
                             height: iconSize + 10,
                             width: iconSize + 10,
@@ -117,7 +117,7 @@ class SignupPageRoute extends StatelessWidget {
                       child: Row(
                         children: [
                           Image.asset(
-                            Assets.google,
+                            Assets.assetsGoogle,
                             fit: BoxFit.fill,
                             height: iconSize + 10,
                             width: iconSize + 10,

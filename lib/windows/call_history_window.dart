@@ -5,7 +5,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:therapist_side/providers/call_history_provider.dart';
-import '../listview_items/call_history_listview_item.dart';
+import '../listitem_views//call_history_listview_item.dart';
 import '../models/call_history_item_model.dart';
 
 class CallHistoryPageRoute extends StatefulWidget {

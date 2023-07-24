@@ -2,25 +2,22 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:therapist_side/generated/assets.dart';
+import 'package:therapist_side/models/chat_history_item_model.dart';
 
 import '../routes/patient_chat_page_route.dart';
 
 class ChatPageRouteListviewItem extends StatefulWidget {
   final String patientImage;
-  final String patientName;
-  final String lastText;
-  final String lastTextDate;
   final int index;
   final int tagIndex;
+  final ChatHistoryItemModel item;
 
   const ChatPageRouteListviewItem({
     Key? key,
     required this.patientImage,
-    required this.patientName,
-    required this.lastText,
-    required this.lastTextDate,
-    required this.index,
+    required this.item,
     required this.tagIndex,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -41,7 +38,7 @@ class _ChatPageRouteListviewItemState extends State<ChatPageRouteListviewItem> {
             MaterialPageRoute(
               builder: (context) => PatientChatPageRoute(
                 index: widget.tagIndex,
-                patientName: widget.patientName,
+                patientName: widget.item.personName,
                 patientImage: widget.patientImage,
               ),
             ),
@@ -70,14 +67,14 @@ class _ChatPageRouteListviewItemState extends State<ChatPageRouteListviewItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.patientName,
+                      widget.item.personName,
                       style: const TextStyle(
                         fontSize: 20,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Text(widget.lastText),
+                    Text(widget.item.lastText),
                   ],
                 ),
               ),
@@ -85,7 +82,7 @@ class _ChatPageRouteListviewItemState extends State<ChatPageRouteListviewItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    widget.lastTextDate,
+                    '${widget.item.lastTextTime.hour}:${widget.item.lastTextTime.minute}',
                     style: const TextStyle(fontSize: 12),
                   ),
                   (newMessageCount <= 0)

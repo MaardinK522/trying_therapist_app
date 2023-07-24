@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/call_history_item_model.dart';
+import 'package:therapist_side/models/call_history_item_model.dart';
 
 class CallHistoryListItemView extends StatelessWidget {
   final int index;

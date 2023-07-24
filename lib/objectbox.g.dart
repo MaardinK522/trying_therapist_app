@@ -15,6 +15,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/call_history_item_model.dart';
+import 'models/chat_history_item_model.dart';
 import 'models/medicine_course_item_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
@@ -72,6 +73,40 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(5, 8904754258716067804),
+      name: 'ChatHistoryItemModel',
+      lastPropertyId: const IdUid(5, 5191764943854953692),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1616304233415431096),
+            name: 'id',
+            type: 6,
+            flags: 129),
+        ModelProperty(
+            id: const IdUid(2, 5349548446453258095),
+            name: 'personName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 2368944319401154011),
+            name: 'lastTextTime',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8802005419694245521),
+            name: 'lastText',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 5191764943854953692),
+            name: 'unReadText',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -95,7 +130,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(4, 9073091288297953078),
+      lastEntityId: const IdUid(5, 8904754258716067804),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -182,6 +217,43 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
+        }),
+    ChatHistoryItemModel: EntityDefinition<ChatHistoryItemModel>(
+        model: _entities[2],
+        toOneRelations: (ChatHistoryItemModel object) => [],
+        toManyRelations: (ChatHistoryItemModel object) => {},
+        getId: (ChatHistoryItemModel object) => object.id,
+        setId: (ChatHistoryItemModel object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ChatHistoryItemModel object, fb.Builder fbb) {
+          final personNameOffset = fbb.writeString(object.personName);
+          final lastTextOffset = fbb.writeString(object.lastText);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, personNameOffset);
+          fbb.addInt64(2, object.lastTextTime.millisecondsSinceEpoch);
+          fbb.addOffset(3, lastTextOffset);
+          fbb.addInt64(4, object.unReadText);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = ChatHistoryItemModel(
+              personName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              lastTextTime: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              lastText: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              unReadText:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
         })
   };
 
@@ -220,4 +292,27 @@ class CallHistoryItemModel_ {
   /// see [CallHistoryItemModel.calledTime]
   static final calledTime =
       QueryIntegerProperty<CallHistoryItemModel>(_entities[1].properties[2]);
+}
+
+/// [ChatHistoryItemModel] entity fields to define ObjectBox queries.
+class ChatHistoryItemModel_ {
+  /// see [ChatHistoryItemModel.id]
+  static final id =
+      QueryIntegerProperty<ChatHistoryItemModel>(_entities[2].properties[0]);
+
+  /// see [ChatHistoryItemModel.personName]
+  static final personName =
+      QueryStringProperty<ChatHistoryItemModel>(_entities[2].properties[1]);
+
+  /// see [ChatHistoryItemModel.lastTextTime]
+  static final lastTextTime =
+      QueryIntegerProperty<ChatHistoryItemModel>(_entities[2].properties[2]);
+
+  /// see [ChatHistoryItemModel.lastText]
+  static final lastText =
+      QueryStringProperty<ChatHistoryItemModel>(_entities[2].properties[3]);
+
+  /// see [ChatHistoryItemModel.unReadText]
+  static final unReadText =
+      QueryIntegerProperty<ChatHistoryItemModel>(_entities[2].properties[4]);
 }

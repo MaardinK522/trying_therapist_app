@@ -2,8 +2,9 @@
 class Assets {
   Assets._();
 
+  static const String assetsFacebook = 'assets/facebook.png';
   static const String assetsGhandi = 'assets/ghandi.jpeg';
+  static const String assetsGoogle = 'assets/google.png';
   static const String assetsIndianMap = 'assets/indian_map.jpg';
-  static const String facebook = 'assets/facebook.png';
-  static const String google = 'assets/google.png';
+
 }
