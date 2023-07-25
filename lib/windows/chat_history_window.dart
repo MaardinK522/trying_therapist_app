@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/providers/chat_history_provider.dart';
+import 'package:therapist_side/routes/contact_picker_page_route.dart';
+import 'package:therapist_side/transitions/custom_fade_transition.dart';
 import '../listitem_views/chat_history_listitem_view.dart';
 
 class ChatHistoryWindow extends StatefulWidget {
@@ -73,7 +75,12 @@ class _ChatHistoryWindowState extends State<ChatHistoryWindow> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            CustomFadeTransition(page: const ContactPickerPageRoute()),
+          );
+        },
         child: const Icon(Icons.message_rounded),
       ),
     );
