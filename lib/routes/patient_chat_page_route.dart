@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:therapist_side/routes/patient_profile_page_route.dart';
+import 'package:therapist_side/routes/patient_details_page_route.dart';
 
 class PatientChatPageRoute extends StatefulWidget {
   final String patientName;

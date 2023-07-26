@@ -75,6 +75,7 @@ class _ChatHistoryWindowState extends State<ChatHistoryWindow> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: () {
           Navigator.push(
             context,

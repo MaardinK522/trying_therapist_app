@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:therapist_side/generated/assets.dart';
 
 import '../listitem_views/patient_appointment_listview_item.dart';
-
 
 class PatientAppointmentsPageRoute extends StatefulWidget {
   const PatientAppointmentsPageRoute({Key? key}) : super(key: key);
@@ -76,7 +76,6 @@ class _PatientAppointmentsPageRouteState
                       itemCount: appointmentCount,
                       controller: appointmentsPageController,
                       scrollDirection: Axis.horizontal,
-                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, int index) {
                         return PatientAppointListviewItem(
                           index: index,
@@ -121,7 +120,7 @@ class _PatientAppointmentsPageRouteState
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  OutlinedButton(
+                  IconButton(
                     onPressed: () {
                       if (appointmentCount > 1) {
                         appointmentsPageController.previousPage(
@@ -130,16 +129,26 @@ class _PatientAppointmentsPageRouteState
                         );
                       }
                     },
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.arrow_back_ios_rounded),
-                        SizedBox(width: 10),
-                        Text("PREVIOUS"),
-                      ],
-                    ),
+                    color: Theme.of(context).colorScheme.primary,
+                    icon: const Icon(Icons.arrow_back_ios_rounded),
                   ),
-                  OutlinedButton(
+                  SmoothPageIndicator(
+                    onDotClicked: (index) =>
+                        appointmentsPageController.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    ),
+                    effect: ScaleEffect(
+                      scale: 1.3,
+                      dotColor: Colors.grey,
+                      activeDotColor: Theme.of(context).colorScheme.primary,
+                    ),
+                    controller: appointmentsPageController,
+                    count: appointmentCount,
+                  ),
+                  IconButton(
+                    color: Theme.of(context).colorScheme.primary,
                     onPressed: () {
                       if (appointmentCount > 1) {
                         appointmentsPageController.nextPage(
@@ -148,14 +157,7 @@ class _PatientAppointmentsPageRouteState
                         );
                       }
                     },
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("Next"),
-                        SizedBox(width: 10),
-                        Icon(Icons.arrow_forward_ios_rounded),
-                      ],
-                    ),
+                    icon: const Icon(Icons.arrow_forward_ios_rounded),
                   ),
                 ],
               ),
@@ -166,18 +168,3 @@ class _PatientAppointmentsPageRouteState
     );
   }
 }
-// child: ListView.separated(
-//   itemCount: 5,
-//   itemBuilder: (context, int index) => PatientAppointListviewItem(
-//     patientMessage:
-//         'I have headache from so many days did not shown to any doctor.',
-//     index: index,
-//     animationController: animationController,
-//   ),
-//   separatorBuilder: (context, index) {
-//     return FadeTransition(
-//       opacity: animationController,
-//       child: Divider(color: Theme.of(context).colorScheme.primary),
-//     );
-//   },
-// ),

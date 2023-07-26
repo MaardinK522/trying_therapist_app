@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:therapist_side/routes/patient_profile_page_route.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:therapist_side/routes/patient_details_page_route.dart';
 import '../generated/assets.dart';
 import '../transitions/custom_fade_transition.dart';
 
@@ -43,30 +44,48 @@ class PatientAppointListviewItem extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 50,
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Hero(
-                          tag: "$patientImage$index${"chat_code"}",
-                          child: Image.asset(
-                            Assets.assetsGhandi,
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.cover,
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    splashColor: Colors.transparent,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CustomFadeTransition(
+                          page: PatientProfilePageRoute(
+                            patientName: patientName,
+                            patientImage: patientImage,
+                            index: index,
+                            jumpCode: "chat_code",
                           ),
                         ),
+                      );
+                    },
+                    contentPadding: const EdgeInsets.all(-10),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Hero(
+                        tag: "$patientImage$index",
+                        child: Image.asset(
+                          Assets.assetsGhandi,
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      const VerticalDivider(thickness: 2),
-                      Expanded(
+                    ),
+                    title: Hero(
+                      tag: "$patientName$index",
+                      child: Material(
+                        type: MaterialType.transparency,
                         child: Text(
                           patientName,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: const TextStyle(fontSize: 20),
                         ),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -103,16 +122,8 @@ class PatientAppointListviewItem extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(5))),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            CustomFadeTransition(
-                              page: PatientProfilePageRoute(
-                                patientName: patientName,
-                                patientImage: patientImage,
-                                index: index,
-                                jumpCode: "chat_code",
-                              ),
-                            ),
+                          Fluttertoast.showToast(
+                            msg: "Alpha builds does not support this feature",
                           );
                         },
                         child: const Text("DETAILS"),

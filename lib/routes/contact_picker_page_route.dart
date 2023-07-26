@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ContactPickerPageRoute extends StatelessWidget {
   const ContactPickerPageRoute({super.key});
@@ -57,7 +58,9 @@ class ContactPickerPageRoute extends StatelessWidget {
                   hintText: "Search...",
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.search_rounded),
-                    onPressed: () {},
+                    onPressed: () {
+                      Fluttertoast.showToast(msg: "Alpha version does not support this feature.");
+                    },
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
