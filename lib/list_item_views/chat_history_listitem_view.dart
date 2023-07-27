@@ -82,7 +82,7 @@ class _ChatPageRouteListviewItemState extends State<ChatPageRouteListviewItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    '${widget.item.lastTextTime.hour}:${widget.item.lastTextTime.minute}',
+                    '${widget.item.lastTextTime?.hour}:${widget.item.lastTextTime?.minute}',
                     style: const TextStyle(fontSize: 12),
                   ),
                   (newMessageCount <= 0)

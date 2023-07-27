@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
 import '../windows/call_history_window.dart';
 import '../windows/medicine_groups_window.dart';
 import '../windows/chat_history_window.dart';
 import '../routes/scan_page_route.dart';
 import '../routes/search_page_route.dart';
 import '../routes/settings_route_page.dart';
-import '../transitions/custom_fade_transition.dart';
 import 'patient_appointments_page_route.dart';
 
 class MyHomePage extends StatefulWidget {

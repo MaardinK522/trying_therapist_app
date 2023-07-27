@@ -7,7 +7,7 @@ class ChatHistoryItemModel {
   String personName;
   String lastText;
   @Property(type: PropertyType.date)
-  DateTime lastTextTime;
+  DateTime? lastTextTime;
   int unReadText;
 
   ChatHistoryItemModel({

@@ -1,10 +1,11 @@
-import 'dart:async';
+import 'dart:math';
 
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:therapist_side/generated/assets.dart';
 
-import '../listitem_views/patient_appointment_listview_item.dart';
+import '../list_item_views/patient_appointment_listitem_view.dart';
 
 class PatientAppointmentsPageRoute extends StatefulWidget {
   const PatientAppointmentsPageRoute({Key? key}) : super(key: key);
@@ -15,29 +16,12 @@ class PatientAppointmentsPageRoute extends StatefulWidget {
 }
 
 class _PatientAppointmentsPageRouteState
-    extends State<PatientAppointmentsPageRoute>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late PageController appointmentsPageController;
-  int appointmentCount = 3;
-
-  @override
-  void initState() {
-    appointmentsPageController = PageController();
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-    Timer(
-      const Duration(milliseconds: 300),
-      () => animationController.forward(),
-    );
-    super.initState();
-  }
+    extends State<PatientAppointmentsPageRoute> {
+  PageController appointmentsPageController = PageController();
+  int appointmentCount = Random().nextInt(10);
 
   @override
   void dispose() {
-    animationController.dispose();
     appointmentsPageController.dispose();
     super.dispose();
   }
@@ -77,13 +61,12 @@ class _PatientAppointmentsPageRouteState
                       controller: appointmentsPageController,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, int index) {
-                        return PatientAppointListviewItem(
+                        return AppointListItemView(
                           index: index,
-                          patientName: "Mahatma Ghandhi",
-                          patientImage: Assets.assetsGhandi,
-                          patientMessage:
+                          personName: Faker().person.name(),
+                          personImage: Assets.assetsGhandi,
+                          personMessage:
                               'I have headache from so many days did not shown to any doctor.',
-                          animationController: animationController,
                           onCanceled: () {
                             showDialog(
                               context: context,

@@ -232,7 +232,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, personNameOffset);
-          fbb.addInt64(2, object.lastTextTime.millisecondsSinceEpoch);
+          fbb.addInt64(2, object.lastTextTime?.millisecondsSinceEpoch);
           fbb.addOffset(3, lastTextOffset);
           fbb.addInt64(4, object.unReadText);
           fbb.finish(fbb.endTable());
@@ -241,12 +241,14 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
+          final lastTextTimeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
           final object = ChatHistoryItemModel(
               personName: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
-              lastTextTime: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              lastTextTime: lastTextTimeValue == null
+                  ? null
+                  : DateTime.fromMillisecondsSinceEpoch(lastTextTimeValue),
               lastText: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 10, ''),
               unReadText:

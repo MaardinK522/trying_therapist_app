@@ -8,13 +8,19 @@ class ChatHistoryProvider extends ChangeNotifier {
 
   Future<void> updateAllChatHistoryItems() async {
     chatHistoryItems = database.getAllItems<ChatHistoryItemModel>();
+    notifyListeners();
   }
 
-  Future<void> addItemToList(ChatHistoryItemModel item) async {
+  Future<void> addItemToList(ChatHistoryItemModel item, context) async {
     database.putItem<ChatHistoryItemModel>(item);
+    notifyListeners();
   }
 
   Future<void> deleteItem(int id) async {
     database.removeItem<ChatHistoryItemModel>(id);
+    notifyListeners();
   }
+
+  List<ChatHistoryItemModel> doesExists(String name) =>
+      database.doesChatHistoryItemExists(name);
 }

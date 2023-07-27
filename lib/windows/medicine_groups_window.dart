@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:therapist_side/providers/medicine_listview_provider.dart';
+import '../providers/medicine_listview_provider.dart';
 import '../exclusive_widgets/medicine_group_bottom_sheets.dart';
-import '../listitem_views//medicine_group_listview_item.dart';
+import '../list_item_views/medicine_group_listview_item.dart';
 import '../models/medicine_course_item_model.dart';
 
 class MedicineCoursePageWindow extends StatefulWidget {
