@@ -12,6 +12,7 @@ import 'package:therapist_side/routes/home_page_route.dart';
 import 'utils/database.dart';
 
 late Database database;
+final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -175,6 +176,10 @@ class MyAppState extends State<MyApp> {
         darkTheme: _darkTheme,
         themeMode: _appThemeMode,
         home: const MyHomePage(),
+        navigatorObservers: [
+          routeObserver,
+        ],
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

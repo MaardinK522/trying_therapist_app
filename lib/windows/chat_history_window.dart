@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:therapist_side/main.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/providers/chat_history_provider.dart';
-import '../list_item_views/chat_history_listitem_view.dart';
+import '../list_item_views/chat_history_list_view.dart';
 
 class ChatHistoryWindow extends StatefulWidget {
   const ChatHistoryWindow({Key? key}) : super(key: key);
@@ -20,14 +20,19 @@ class ChatHistoryWindow extends StatefulWidget {
 class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
   final _streamController = StreamController<List<ChatHistoryItemModel>>();
   late Timer timer;
+  late final ChatHistoryProvider _chatHistoryProvider;
 
   @override
   void initState() {
-    debugPrint("Chat History");
+    _chatHistoryProvider =
+        Provider.of<ChatHistoryProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      routeObserver.subscribe(this, ModalRoute.of(context)!);
+    });
+    super.initState();
     timer = Timer(const Duration(milliseconds: 100), () {
       updateItems();
     });
-    super.initState();
   }
 
   @override
@@ -35,6 +40,7 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
     updateItems();
     super.didPopNext();
   }
+
   @override
   void dispose() {
     timer.cancel();
@@ -42,38 +48,33 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
     super.dispose();
   }
 
-  void updateItems() {
-    Provider.of<ChatHistoryProvider>(context, listen: false)
-        .updateAllChatHistoryItems();
-    _streamController.sink.add(ChatHistoryProvider.chatHistoryItems);
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        Provider.of<ChatHistoryProvider>(context, listen: false)
-            .updateAllChatHistoryItems();
+        _chatHistoryProvider.updateAllChatHistoryItems();
         debugPrint(ChatHistoryProvider.chatHistoryItems.length.toString());
       },
       child: Scaffold(
         body: StreamBuilder<List<ChatHistoryItemModel>>(
           stream: _streamController.stream,
-          builder: (context, snapshot) {
+          builder: (BuildContext context,
+              AsyncSnapshot<List<ChatHistoryItemModel>> snapshot) {
             if (snapshot.hasData) {
               return ListView.separated(
                 padding: const EdgeInsets.only(top: 10),
                 itemBuilder: (context, index) {
-                  return ChatPageRouteListviewItem(
+                  return ChatPageRouteListItemView(
                     patientImage: "assets/ghandi.jpeg",
-                    index: index ~/ 2,
                     tagIndex: index,
-                    item: ChatHistoryItemModel(
-                      personName: snapshot.data![index].personName,
-                      lastTextTime: snapshot.data![index].lastTextTime,
-                      lastText: snapshot.data![index].lastText,
-                      unReadText: Random().nextInt(10),
-                    ),
+                    removeItem: () {
+                      setState(() {
+                        _chatHistoryProvider
+                            .deleteItem(snapshot.data![index].id);
+                        snapshot.data?.removeAt(index);
+                      });
+                    },
+                    item: snapshot.data![index],
                   );
                 },
                 itemCount: snapshot.data!.length,
@@ -97,5 +98,12 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
         ),
       ),
     );
+  }
+
+  void updateItems() {
+    debugPrint("Updated list items.");
+    Provider.of<ChatHistoryProvider>(context, listen: false)
+        .updateAllChatHistoryItems();
+    _streamController.sink.add(ChatHistoryProvider.chatHistoryItems);
   }
 }

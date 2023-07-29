@@ -3,25 +3,23 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/providers/chat_history_provider.dart';
-import 'package:therapist_side/routes/patient_chat_page_route.dart';
+import 'package:therapist_side/routes/chat_page_route.dart';
 import 'package:therapist_side/routes/patient_details_page_route.dart';
 import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
 import '../generated/assets.dart';
 
 class AppointListItemView extends StatefulWidget {
-  final String personName;
   final int index;
-  final String personImage;
-  final String personMessage;
   final Function onCanceled;
+  final ChatHistoryItemModel item;
+  final String personMessage;
 
   const AppointListItemView({
     super.key,
-    required this.personMessage,
     required this.onCanceled,
-    required this.personName,
     required this.index,
-    required this.personImage,
+    required this.item,
+    required this.personMessage,
   });
 
   @override
@@ -33,6 +31,11 @@ class _AppointListItemViewState extends State<AppointListItemView> {
 
   late ChatHistoryProvider provider =
       Provider.of<ChatHistoryProvider>(context, listen: false);
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +64,8 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                       context,
                       CustomFadeTransition(
                         page: PatientProfilePageRoute(
-                          patientName: widget.personName,
-                          patientImage: widget.personImage,
+                          patientName: widget.item.personName,
+                          patientImage: Assets.assetsGhandi,
                           index: widget.index,
                           jumpCode: "chat_code",
                         ),
@@ -73,7 +76,7 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Hero(
-                      tag: "${widget.personImage}${widget.index}",
+                      tag: "${Assets.assetsGhandi}${widget.index}",
                       child: Image.asset(
                         Assets.assetsGhandi,
                         height: 50,
@@ -83,11 +86,11 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                     ),
                   ),
                   title: Hero(
-                    tag: "${widget.personName}${widget.index}",
+                    tag: "${widget.item.personName}${widget.index}",
                     child: Material(
                       type: MaterialType.transparency,
                       child: Text(
-                        widget.personName,
+                        widget.item.personName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: const TextStyle(fontSize: 20),
@@ -100,7 +103,7 @@ class _AppointListItemViewState extends State<AppointListItemView> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Text(
-                    widget.personMessage,
+                    widget.item.lastText,
                     maxLines: 5,
                     style: const TextStyle(fontSize: 20),
                   ),
@@ -116,8 +119,8 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                     ),
                     onPressed: () {
                       ChatHistoryItemModel item = ChatHistoryItemModel(
-                        personName: widget.personName,
-                        lastTextTime: null,
+                        personName: widget.item.personName,
+                        lastTextTime: DateTime.now(),
                         lastText: '',
                         unReadText: 0,
                       );
@@ -126,13 +129,13 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                         if (val.personName == item.personName) foundOne = true;
                       }
                       if (!foundOne) provider.addItemToList(item, context);
+                      debugPrint("Updating the Chat History Window");
                       Navigator.push(
                         context,
                         CustomFadeTransition(
                           page: PatientChatPageRoute(
-                            patientName: widget.personName,
                             index: 0,
-                            patientImage: Assets.assetsGhandi,
+                            item: widget.item,
                           ),
                         ),
                       );

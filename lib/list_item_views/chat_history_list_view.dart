@@ -4,28 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:therapist_side/generated/assets.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 
-import '../routes/patient_chat_page_route.dart';
+import '../routes/chat_page_route.dart';
 
-class ChatPageRouteListviewItem extends StatefulWidget {
+class ChatPageRouteListItemView extends StatefulWidget {
   final String patientImage;
-  final int index;
   final int tagIndex;
   final ChatHistoryItemModel item;
+  final Function removeItem;
 
-  const ChatPageRouteListviewItem({
+  const ChatPageRouteListItemView({
     Key? key,
     required this.patientImage,
     required this.item,
     required this.tagIndex,
-    required this.index,
+    required this.removeItem,
   }) : super(key: key);
 
   @override
-  State<ChatPageRouteListviewItem> createState() =>
-      _ChatPageRouteListviewItemState();
+  State<ChatPageRouteListItemView> createState() =>
+      _ChatPageRouteListItemViewState();
 }
 
-class _ChatPageRouteListviewItemState extends State<ChatPageRouteListviewItem> {
+class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
   @override
   Widget build(BuildContext context) {
     int newMessageCount = Random().nextInt(10);
@@ -38,11 +38,13 @@ class _ChatPageRouteListviewItemState extends State<ChatPageRouteListviewItem> {
             MaterialPageRoute(
               builder: (context) => PatientChatPageRoute(
                 index: widget.tagIndex,
-                patientName: widget.item.personName,
-                patientImage: widget.patientImage,
+                item: widget.item,
               ),
             ),
           );
+        },
+        onLongPress: () {
+          widget.removeItem();
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),

@@ -1,18 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:therapist_side/generated/assets.dart';
+import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/routes/patient_details_page_route.dart';
 
 class PatientChatPageRoute extends StatefulWidget {
-  final String patientName;
-  final String patientImage;
+  final ChatHistoryItemModel item;
   final int index;
 
-  const PatientChatPageRoute(
-      {super.key,
-      required this.patientName,
-      required this.index,
-      required this.patientImage});
+  const PatientChatPageRoute({
+    super.key,
+    required this.item,
+    required this.index,
+  });
 
   @override
   State<PatientChatPageRoute> createState() => _PatientChatPageRouteState();
@@ -25,17 +26,6 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
       (Theme.of(context).colorScheme.brightness == Brightness.dark)
           ? Colors.white
           : Colors.black;
-
-  Widget chatItemView(index, isSent) => Card(
-        borderOnForeground: true,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Text(
-            chatItems[index],
-            textAlign: (isSent) ? TextAlign.left : TextAlign.right,
-          ),
-        ),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +41,8 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                   MaterialPageRoute(
                     builder: (context) => PatientProfilePageRoute(
                       index: widget.index,
-                      patientImage: widget.patientImage,
-                      patientName: widget.patientName,
+                      patientImage: Assets.assetsGhandi,
+                      patientName: widget.item.personName,
                       jumpCode: "chat_code'",
                     ),
                   ),
@@ -63,23 +53,25 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Hero(
-                    tag: "${widget.patientImage}${widget.index}",
+                    tag: "${Assets.assetsGhandi}${widget.index}",
                     child: ClipRect(
                       child: Container(
                         height: 50,
                         width: 50,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage(widget.patientImage),
+                            image: AssetImage(Assets.assetsGhandi),
                           ),
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Expanded(child: Text(widget.patientName)),
+                  Expanded(
+                    child: Text(widget.item.personName),
+                  ),
                 ],
               ),
             ),
@@ -97,7 +89,18 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                     return Row(
                       children: (isSent)
                           ? [
-                              chatItemView(index, isSent),
+                              Card(
+                                borderOnForeground: true,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(
+                                    chatItems[index],
+                                    textAlign: (isSent)
+                                        ? TextAlign.left
+                                        : TextAlign.right,
+                                  ),
+                                ),
+                              ),
                               const Expanded(child: Center()),
                             ]
                           : [

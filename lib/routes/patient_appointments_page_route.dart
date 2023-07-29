@@ -3,12 +3,14 @@ import 'dart:math';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:therapist_side/generated/assets.dart';
+import 'package:therapist_side/models/chat_history_item_model.dart';
 
-import '../list_item_views/patient_appointment_listitem_view.dart';
+import '../list_item_views/appointment_list_view.dart';
 
 class PatientAppointmentsPageRoute extends StatefulWidget {
-  const PatientAppointmentsPageRoute({Key? key}) : super(key: key);
+  const PatientAppointmentsPageRoute({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<PatientAppointmentsPageRoute> createState() =>
@@ -63,8 +65,12 @@ class _PatientAppointmentsPageRouteState
                       itemBuilder: (context, int index) {
                         return AppointListItemView(
                           index: index,
-                          personName: Faker().person.name(),
-                          personImage: Assets.assetsGhandi,
+                          item: ChatHistoryItemModel(
+                            lastTextTime: null,
+                            personName: Faker().person.name(),
+                            lastText: '',
+                            unReadText: 0,
+                          ),
                           personMessage:
                               'I have headache from so many days did not shown to any doctor.',
                           onCanceled: () {
