@@ -36,3 +36,4 @@ flutter:
     - assets/indian_map.jpg
     - assets/facebook.png
     - assets/google.png
+    - lib/models/

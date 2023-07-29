@@ -68,7 +68,6 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                           patientName: widget.item.personName,
                           patientImage: Assets.assetsGhandi,
                           index: widget.index,
-                          jumpCode: "chat_code",
                         ),
                       ),
                     );

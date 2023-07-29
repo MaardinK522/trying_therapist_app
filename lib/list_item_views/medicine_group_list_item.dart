@@ -45,24 +45,7 @@ class _MedicineGroupListviewItemViewState
           ),
           onSelected: (option) {
             if (option == "delete") widget.onRemove(widget.item.id);
-            if (option == 'edit') {
-              showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: Theme.of(context).colorScheme.secondary,
-                    width: 2,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    topLeft: Radius.circular(20),
-                  ),
-                ),
-                builder: (context) =>
-                    MedicineGroupBottomSheets(item: widget.item),
-              );
-            }
+            if (option == 'edit') _openBottomSheets();
           },
           itemBuilder: (BuildContext context) {
             var options = ["edit", "delete", "share"];
@@ -126,5 +109,23 @@ class _MedicineGroupListviewItemViewState
         );
       },
     ).toList();
+  }
+
+  void _openBottomSheets() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.secondary,
+          width: 2,
+        ),
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(20),
+          topLeft: Radius.circular(20),
+        ),
+      ),
+      builder: (context) => MedicineGroupBottomSheets(item: widget.item),
+    );
   }
 }

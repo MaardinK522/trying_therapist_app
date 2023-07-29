@@ -6,5 +6,61 @@ class Assets {
   static const String assetsGhandi = 'assets/ghandi.jpeg';
   static const String assetsGoogle = 'assets/google.png';
   static const String assetsIndianMap = 'assets/indian_map.jpg';
-
+  static const String exclusiveWidgetsMedicineGroupBottomSheets =
+      'lib/exclusive_widgets/medicine_group_bottom_sheets.dart';
+  static const String generatedAssets = 'lib/generated/assets.dart';
+  static const String libMain = 'lib/main.dart';
+  static const String libObjectbox = 'lib/objectbox.g.dart';
+  static const String libObjectboxModel = 'lib/objectbox-model.json';
+  static const String listItemViewsAppointmentListView =
+      'lib/list_item_views/appointment_list_view.dart';
+  static const String listItemViewsCallHistoryListviewItem =
+      'lib/list_item_views/call_history_listview_item.dart';
+  static const String listItemViewsChatHistoryListView =
+      'lib/list_item_views/chat_history_list_view.dart';
+  static const String listItemViewsMedicineGroupListItem =
+      'lib/list_item_views/medicine_group_list_item.dart';
+  static const String modelsCallHistoryItemModel =
+      'lib/models/call_history_item_model.dart';
+  static const String modelsChatHistoryItemModel =
+      'lib/models/chat_history_item_model.dart';
+  static const String modelsChatMessageModel =
+      'lib/models/chat_message_model.dart';
+  static const String modelsMedicineCourseItemModel =
+      'lib/models/medicine_course_item_model.dart';
+  static const String providersCallHistoryProvider =
+      'lib/providers/call_history_provider.dart';
+  static const String providersChatHistoryProvider =
+      'lib/providers/chat_history_provider.dart';
+  static const String providersMedicineListviewProvider =
+      'lib/providers/medicine_listview_provider.dart';
+  static const String routesCallPatientPageRoute =
+      'lib/routes/call_patient_page_route.dart';
+  static const String routesChatPageRoute = 'lib/routes/chat_page_route.dart';
+  static const String routesHomePageRoute = 'lib/routes/home_page_route.dart';
+  static const String routesPatientAppointmentsPageRoute =
+      'lib/routes/patient_appointments_page_route.dart';
+  static const String routesPatientDetailsPageRoute =
+      'lib/routes/patient_details_page_route.dart';
+  static const String routesQrDataInfoPageRoute =
+      'lib/routes/qr_data_info_page_route.dart';
+  static const String routesScanPageRoute = 'lib/routes/scan_page_route.dart';
+  static const String routesSearchPageRoute =
+      'lib/routes/search_page_route.dart';
+  static const String routesSettingsRoutePage =
+      'lib/routes/settings_route_page.dart';
+  static const String routesSignupRoutePage =
+      'lib/routes/signup_route_page.dart';
+  static const String transitionsEffectBottomSheetsTranslateAnimation =
+      'lib/transitions_effect/bottom_sheets_translate_animation.dart';
+  static const String transitionsEffectCustomFadeTransition =
+      'lib/transitions_effect/custom_fade_transition.dart';
+  static const String utilsDatabase = 'lib/utils/database.dart';
+  static const String utilsThemeColor = 'lib/utils/theme_color.dart';
+  static const String windowsCallHistoryWindow =
+      'lib/windows/call_history_window.dart';
+  static const String windowsChatHistoryWindow =
+      'lib/windows/chat_history_window.dart';
+  static const String windowsMedicineGroupsWindow =
+      'lib/windows/medicine_groups_window.dart';
 }

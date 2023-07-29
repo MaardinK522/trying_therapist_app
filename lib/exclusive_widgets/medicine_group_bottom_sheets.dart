@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/medicine_listview_provider.dart';
+
 import '../models/medicine_course_item_model.dart';
+import '../providers/medicine_listview_provider.dart';
 
 class MedicineGroupBottomSheets extends StatefulWidget {
   final MedicineGroupItemModel item;
@@ -21,12 +22,14 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
   final TextEditingController medicineNameTextController =
       TextEditingController();
   late List<String> medicineChipsList = List<String>.empty(growable: true);
+  bool wasEmpty = false;
 
   @override
   void initState() {
     topicNameTextController.text = widget.item.topic;
     if (widget.item.medicines.isNotEmpty) {
       medicineChipsList = widget.item.medicines;
+      wasEmpty = true;
     }
     super.initState();
   }
@@ -145,13 +148,11 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                   child: FilledButton.tonal(
                     onPressed: () {
                       if (topicNameTextController.text.isNotEmpty) {
+                        widget.item.medicines.addAll(medicineChipsList);
                         Provider.of<MedicineGroupListViewProvider>(context,
                                 listen: false)
                             .addItemToList(
-                          MedicineGroupItemModel(
-                            topic: topicNameTextController.text.trim(),
-                            medicines: medicineChipsList,
-                          ),
+                          widget.item,
                         );
                         Navigator.pop(context);
                       }

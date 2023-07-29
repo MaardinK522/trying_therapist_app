@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
-import '../windows/call_history_window.dart';
-import '../windows/medicine_groups_window.dart';
-import '../windows/chat_history_window.dart';
+
 import '../routes/scan_page_route.dart';
 import '../routes/search_page_route.dart';
 import '../routes/settings_route_page.dart';
+import '../windows/call_history_window.dart';
+import '../windows/chat_history_window.dart';
+import '../windows/medicine_groups_window.dart';
 import 'patient_appointments_page_route.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -43,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: const Text("TherapistSide"),
-        // shadowColor: Theme.of(context).colorScheme.primary,
         bottom: TabBar(
           splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
           indicatorColor: Theme.of(context).colorScheme.primary,

@@ -31,7 +31,6 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow>
   @override
   void didPopNext() {
     updateUI();
-
     super.didPopNext();
   }
 

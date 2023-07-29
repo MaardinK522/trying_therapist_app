@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:therapist_side/generated/assets.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
+import 'package:therapist_side/models/chat_message_model.dart';
 import 'package:therapist_side/routes/patient_details_page_route.dart';
 
 class PatientChatPageRoute extends StatefulWidget {
@@ -20,9 +19,19 @@ class PatientChatPageRoute extends StatefulWidget {
 }
 
 class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
-  var chatItems = ["Jai mata dii", "Hello"];
+  List<ChatMessage> chatItems = [
+    ChatMessage(
+      time: DateTime.now(),
+      message: "Jai mata dii",
+      isSent: true,
+    ),
+    ChatMessage(
+      time: DateTime.now(),
+      message: "Hello",
+    ),
+  ];
   TextEditingController chatTextController = TextEditingController();
-  late var menuItemColor =
+  late Color menuItemColor =
       (Theme.of(context).colorScheme.brightness == Brightness.dark)
           ? Colors.white
           : Colors.black;
@@ -34,46 +43,31 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
       child: Scaffold(
           appBar: AppBar(
             titleSpacing: -5,
-            title: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PatientProfilePageRoute(
-                      index: widget.index,
-                      patientImage: Assets.assetsGhandi,
-                      patientName: widget.item.personName,
-                      jumpCode: "chat_code'",
-                    ),
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Hero(
-                    tag: "${Assets.assetsGhandi}${widget.index}",
-                    child: ClipRect(
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(Assets.assetsGhandi),
-                          ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Hero(
+                  tag: "${Assets.assetsGhandi}${widget.index}",
+                  child: ClipRect(
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(Assets.assetsGhandi),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(widget.item.personName),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(widget.item.personName),
+                ),
+              ],
             ),
             actions: _buildAppbarActions(),
           ),
@@ -85,7 +79,7 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                   reverse: true,
                   itemCount: chatItems.length,
                   itemBuilder: (context, index) {
-                    bool isSent = Random().nextDouble() < 0.5;
+                    var isSent = (chatItems[index].isSent);
                     return Row(
                       children: (isSent)
                           ? [
@@ -94,7 +88,7 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: Text(
-                                    chatItems[index],
+                                    chatItems[index].message,
                                     textAlign: (isSent)
                                         ? TextAlign.left
                                         : TextAlign.right,
@@ -110,7 +104,7 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: Text(
-                                    chatItems[index],
+                                    chatItems[index].message,
                                     textAlign: (isSent)
                                         ? TextAlign.left
                                         : TextAlign.right,
@@ -122,6 +116,7 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                   },
                 ),
               ),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
@@ -130,30 +125,54 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                       child: TextFormField(
                         controller: chatTextController,
                         decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.primary),
+                          suffixIcon: GestureDetector(
+                            onLongPress: () {
+                              setState(() {
+                                if (chatTextController.text.isNotEmpty) {
+                                  chatItems.insert(
+                                    0,
+                                    ChatMessage(
+                                      time: DateTime.now(),
+                                      message: chatTextController.text,
+                                      isSent: true,
+                                    ),
+                                  );
+                                  chatTextController.clear();
+                                }
+                              });
+                            },
+                            child: IconButton(
+                              onPressed: () {
+                                if (chatTextController.text.isNotEmpty) {
+                                  setState(() {
+                                    chatItems.insert(
+                                      0,
+                                      ChatMessage(
+                                        time: DateTime.now(),
+                                        message: chatTextController.text,
+                                      ),
+                                    );
+                                    chatTextController.clear();
+                                  });
+                                }
+                              },
+                              color: Theme.of(context).colorScheme.primary,
+                              icon: const Icon(Icons.send),
+                            ),
                           ),
-                          border: const OutlineInputBorder(
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(0),
                             borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(0),
+                            borderSide: const BorderSide(
                               color: Colors.grey,
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      margin: const EdgeInsets.all(10),
-                      child: IconButton(
-                        onPressed: () {},
-                        color: Theme.of(context).colorScheme.primary,
-                        icon: const Icon(Icons.send),
                       ),
                     ),
                   ],
@@ -175,10 +194,11 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
         itemBuilder: (context) {
           return [
             PopupMenuItem(
+              value: "audio",
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Call"),
+                  const Text("Voice call"),
                   Icon(
                     Icons.call,
                     color: menuItemColor,
@@ -187,10 +207,11 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
               ),
             ),
             PopupMenuItem(
+              value: "Video chat",
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Video call"),
+                  const Text("Video"),
                   Icon(
                     Icons.video_call_rounded,
                     color: menuItemColor,
@@ -201,13 +222,28 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
           ];
         },
       ),
-      PopupMenuButton(
+      PopupMenuButton<String>(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
+        onSelected: (String value) {
+          if (value == "view") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PatientProfilePageRoute(
+                  index: widget.index,
+                  patientImage: Assets.assetsGhandi,
+                  patientName: widget.item.personName,
+                ),
+              ),
+            );
+          }
+        },
         itemBuilder: (context) {
           return [
             PopupMenuItem(
+              value: "view",
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -220,6 +256,7 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
               ),
             ),
             PopupMenuItem(
+              value: "search",
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -232,6 +269,7 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
               ),
             ),
             PopupMenuItem(
+              value: "wallpapers",
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -244,6 +282,7 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
               ),
             ),
             PopupMenuItem(
+              value: "block",
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
