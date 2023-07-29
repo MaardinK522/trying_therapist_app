@@ -3,10 +3,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/medicine_listview_provider.dart';
+
 import '../exclusive_widgets/medicine_group_bottom_sheets.dart';
 import '../list_item_views/medicine_group_list_item.dart';
+import '../main.dart';
 import '../models/medicine_course_item_model.dart';
+import '../providers/medicine_listview_provider.dart';
 
 class MedicineCoursePageWindow extends StatefulWidget {
   const MedicineCoursePageWindow({Key? key}) : super(key: key);
@@ -19,22 +21,43 @@ class MedicineCoursePageWindow extends StatefulWidget {
       context.findAncestorStateOfType<MedicineCoursePageWindowState>();
 }
 
-class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
+class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow>
+    with RouteAware {
   final _streamController = StreamController<List<MedicineGroupItemModel>>();
   late Timer timer;
+  late final MedicineGroupListViewProvider _medicineGroupProvider =
+      Provider.of<MedicineGroupListViewProvider>(context, listen: false);
+
+  @override
+  void didPopNext() {
+    updateUI();
+
+    super.didPopNext();
+  }
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      routeObserver.subscribe(this, ModalRoute.of(context)!);
+    });
     super.initState();
     timer = Timer(
       Duration(milliseconds: Random().nextInt(1000)),
-      () => Provider.of<MedicineGroupListViewProvider>(context, listen: false)
-          .updateAllMedicineGroupItems()
-          .whenComplete(
-            () => _streamController.sink.add(
+      () => updateUI(),
+    );
+  }
+
+  void updateUI() {
+    _medicineGroupProvider.updateAllMedicineGroupItems().whenComplete(
+      () {
+        setState(() {
+          if (!_streamController.isClosed) {
+            _streamController.sink.add(
               MedicineGroupListViewProvider.medicineGroupsItems,
-            ),
-          ),
+            );
+          }
+        });
+      },
     );
   }
 
@@ -61,10 +84,8 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
                   itemBuilder: (context, index) {
                     return MedicineGroupListviewItemView(
                       onRemove: (id) {
-                        Provider.of<MedicineGroupListViewProvider>(context,
-                                listen: false)
-                            .deleteItem(id);
-                        snapshot.data?.removeAt(index);
+                        _medicineGroupProvider.deleteItem(id);
+                        updateUI();
                       },
                       item: snapshot.data![index],
                       index: index,
@@ -79,10 +100,7 @@ class MedicineCoursePageWindowState extends State<MedicineCoursePageWindow> {
               return const Center(child: CircularProgressIndicator());
             }),
         floatingActionButton: FloatingActionButton(
-          backgroundColor:
-              (Theme.of(context).colorScheme.brightness != Brightness.dark)
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.secondary,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           onPressed: () {
             showModalBottomSheet(
               context: context,

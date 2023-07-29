@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:therapist_side/main.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/providers/chat_history_provider.dart';
+
 import '../list_item_views/chat_history_list_view.dart';
 
 class ChatHistoryWindow extends StatefulWidget {
@@ -24,21 +25,15 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
 
   @override
   void initState() {
-    _chatHistoryProvider =
-        Provider.of<ChatHistoryProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       routeObserver.subscribe(this, ModalRoute.of(context)!);
     });
     super.initState();
+    _chatHistoryProvider =
+        Provider.of<ChatHistoryProvider>(context, listen: false);
     timer = Timer(const Duration(milliseconds: 100), () {
       updateItems();
     });
-  }
-
-  @override
-  void didPopNext() {
-    updateItems();
-    super.didPopNext();
   }
 
   @override
@@ -53,7 +48,6 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
     return GestureDetector(
       onLongPress: () {
         _chatHistoryProvider.updateAllChatHistoryItems();
-        debugPrint(ChatHistoryProvider.chatHistoryItems.length.toString());
       },
       child: Scaffold(
         body: StreamBuilder<List<ChatHistoryItemModel>>(
@@ -101,9 +95,10 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
   }
 
   void updateItems() {
-    debugPrint("Updated list items.");
-    Provider.of<ChatHistoryProvider>(context, listen: false)
-        .updateAllChatHistoryItems();
-    _streamController.sink.add(ChatHistoryProvider.chatHistoryItems);
+    _chatHistoryProvider.updateAllChatHistoryItems().whenComplete(() {
+      if (!_streamController.isClosed) {
+        _streamController.sink.add(ChatHistoryProvider.chatHistoryItems);
+      }
+    });
   }
 }

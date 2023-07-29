@@ -6,6 +6,7 @@ import 'package:therapist_side/providers/chat_history_provider.dart';
 import 'package:therapist_side/routes/chat_page_route.dart';
 import 'package:therapist_side/routes/patient_details_page_route.dart';
 import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
+
 import '../generated/assets.dart';
 
 class AppointListItemView extends StatefulWidget {
@@ -129,7 +130,6 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                         if (val.personName == item.personName) foundOne = true;
                       }
                       if (!foundOne) provider.addItemToList(item, context);
-                      debugPrint("Updating the Chat History Window");
                       Navigator.push(
                         context,
                         CustomFadeTransition(

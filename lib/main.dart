@@ -124,7 +124,6 @@ class MyAppState extends State<MyApp> {
         } else if (newSeedColor == Colors.blue) {
           color = "blue";
         }
-        debugPrint(color);
         saveSeedColor(color);
       },
     );
@@ -187,12 +186,10 @@ class MyAppState extends State<MyApp> {
   Future saveSeedColor(String color) async {
     var pref = await SharedPreferences.getInstance();
     pref.setString("theme_color", color);
-    debugPrint("Color saved");
   }
 
   Future saveThemeMode(int mode) async {
     var pref = await SharedPreferences.getInstance();
     pref.setInt("theme_mode", mode);
-    debugPrint("ThemeMode saved");
   }
 }

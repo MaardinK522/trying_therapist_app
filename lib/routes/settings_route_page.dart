@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../generated/assets.dart';
 import '../main.dart';
 import '../utils/theme_color.dart';
@@ -38,73 +39,70 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
       _selected = "System";
     }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("TherapistSide"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.info_outline_rounded),
-          )
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              primary: true,
-              child: Column(
-                children: [
-                  const SizedBox(height: 50),
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        Assets.assetsGhandi,
-                        height: 150,
-                        width: 150,
-                        fit: BoxFit.cover,
-                      ),
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              )),
+              floating: true,
+              expandedHeight: 250,
+              flexibleSpace: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+                child: Image.asset(
+                  Assets.assetsGhandi,
+                  height: double.maxFinite,
+                  width: double.maxFinite,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ];
+        },
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                primary: true,
+                child: Column(
+                  children: [
+                    SizedBox(height: MediaQuery.of(context).padding.top + 20),
+                    const Text(
+                      "Mahatma Ghandhi",
+                      style: TextStyle(fontSize: 20),
                     ),
-                  ),
-                  const SizedBox(height: 50),
-                  const Text(
-                    "Mahatma Ghandhi",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  const SizedBox(height: 5),
-                  const Text(
-                    "Toleration specialist",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  const SizedBox(height: 25),
-                  const SizedBox(height: 10),
-                  ListTile(
-                    onTap: () {},
-                    leading: const Text("Edit profile"),
-                  ),
-                  ListTile(
-                    onTap: () {},
-                    leading: const Text("Language"),
-                    trailing: const Text("English"),
-                  ),
-                  ExpansionTile(
-                    title: const Text("Themes"),
-                    children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                          side: BorderSide(
-                            width: 4,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
+                    const SizedBox(height: 5),
+                    const Text(
+                      "Toleration specialist",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    const SizedBox(height: 25),
+                    const SizedBox(height: 10),
+                    ListTile(
+                      onTap: () {},
+                      leading: const Text("Edit profile"),
+                    ),
+                    ListTile(
+                      onTap: () {},
+                      leading: const Text("Language"),
+                      trailing: const Text("English"),
+                    ),
+                    ExpansionTile(
+                      title: const Text("Themes"),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Text("Theme"),
                               ListTile(
                                 title: const Text(
                                   "Light",
@@ -213,21 +211,20 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                               const SizedBox(height: 10),
                             ],
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Divider(color: Theme.of(context).colorScheme.primaryContainer),
-          ListTile(
-            onTap: () {},
-            title: const Text("Logout"),
-            trailing: const Icon(Icons.logout_rounded),
-          ),
-        ],
+            ListTile(
+              onTap: () {},
+              title: const Text("Logout"),
+              trailing: const Icon(Icons.logout_rounded),
+            ),
+          ],
+        ),
       ),
     );
   }

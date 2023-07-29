@@ -5,6 +5,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:therapist_side/providers/call_history_provider.dart';
+
 import '../list_item_views/call_history_listview_item.dart';
 import '../models/call_history_item_model.dart';
 
@@ -17,10 +18,14 @@ class CallHistoryPageRoute extends StatefulWidget {
 
 class _CallHistoryPageRouteState extends State<CallHistoryPageRoute> {
   final _streamController = StreamController<List<CallHistoryItemModel>>();
+  late final CallHistoryItemProvider _callHistoryProvider;
+
   late Timer timer;
 
   @override
   void initState() {
+    _callHistoryProvider =
+        Provider.of<CallHistoryItemProvider>(context, listen: false);
     super.initState();
     timer = Timer(
       Duration(milliseconds: Random().nextInt(1000)),
@@ -29,8 +34,7 @@ class _CallHistoryPageRouteState extends State<CallHistoryPageRoute> {
   }
 
   void resetStream() {
-    Provider.of<CallHistoryItemProvider>(context, listen: false)
-        .updateAllCallHistoryItems();
+    _callHistoryProvider.updateAllCallHistoryItems();
     _streamController.sink.add(CallHistoryItemProvider.callHistoryItems);
   }
 

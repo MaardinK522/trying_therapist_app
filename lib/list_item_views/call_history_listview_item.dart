@@ -13,8 +13,7 @@ class CallHistoryListItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,14 +36,16 @@ class CallHistoryListItemView extends StatelessWidget {
               children: [
                 Text(
                   item.personName,
-                  style: const TextStyle(fontSize: 20),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w500),
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 10),
                 Text(
                   "${item.calledTime.hour}:${item.calledTime.minute} "
                   "${item.calledTime.day}/${item.calledTime.month}",
-                  style: const TextStyle(fontSize: 15),
+                  style: const TextStyle(
+                      fontSize: 13, fontWeight: FontWeight.w100),
                 ),
               ],
             ),
@@ -59,7 +60,10 @@ class CallHistoryListItemView extends StatelessWidget {
             onPressed: () {},
             child: const Row(
               children: [
-                Icon(Icons.call),
+                Icon(
+                  Icons.call,
+                  size: 20,
+                ),
                 SizedBox(width: 10),
                 Text(
                   "Call",

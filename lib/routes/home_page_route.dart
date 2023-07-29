@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     MedicineCoursePageWindow(),
   ];
   final TextEditingController searchTextFormFieldController =
-  TextEditingController();
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +46,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         // shadowColor: Theme.of(context).colorScheme.primary,
         bottom: TabBar(
           splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
-          indicatorColor: Theme
-              .of(context)
-              .colorScheme
-              .primary,
+          indicatorColor: Theme.of(context).colorScheme.primary,
           controller: _tabController,
           isScrollable: true,
           indicatorSize: TabBarIndicatorSize.label,
           tabs: items
               .map<Widget>(
-                (item) =>
-                Padding(
+                (item) => Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text(item, style: textStyle)),
-          )
+              )
               .toList(),
         ),
         actions: _buildActions,
@@ -71,8 +67,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 
-  get _buildActions =>
-      [
+  get _buildActions => [
         IconButton(
           icon: const Icon(
             Icons.search_rounded,
@@ -135,18 +130,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          color: Theme
-              .of(context)
-              .colorScheme
-              .secondaryContainer,
+          color: Theme.of(context).colorScheme.secondaryContainer,
           itemBuilder: (context) {
             var menuItemColor =
-            (Theme
-                .of(context)
-                .colorScheme
-                .brightness == Brightness.dark)
-                ? Colors.white
-                : Colors.black;
+                (Theme.of(context).colorScheme.brightness == Brightness.dark)
+                    ? Colors.white
+                    : Colors.black;
             return [
               PopupMenuItem(
                 value: "scan",
