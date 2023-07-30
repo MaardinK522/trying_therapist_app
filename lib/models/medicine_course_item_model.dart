@@ -4,8 +4,8 @@ import 'package:objectbox/objectbox.dart';
 class MedicineGroupItemModel {
   @Id(assignable: true)
   int id = 0;
-  final String topic;
-  late List<String> medicines;
+  String topic;
+  List<String> medicines;
   bool? isExpanded;
 
   MedicineGroupItemModel({

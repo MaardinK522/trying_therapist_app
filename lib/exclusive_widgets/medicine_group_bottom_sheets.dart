@@ -144,6 +144,7 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                 Expanded(
                   child: FilledButton.tonal(
                     onPressed: () {
+                      widget.item.topic = topicNameTextController.text.trim();
                       widget.item.medicines = medicineChipsList;
                       Provider.of<MedicineGroupListViewProvider>(context,
                               listen: false)

@@ -28,6 +28,7 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
     for (var item in themeColors) {
       if (item.color == MyApp.of(context)?.seedColor) item.isSelected = true;
     }
+
     super.initState();
   }
 
@@ -47,10 +48,24 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
           return [
             SliverAppBar(
               shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
-              )),
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+              ),
+              title: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Mahatma Ghandhi",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    "Toleration specialist",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+                  ),
+                ],
+              ),
               floating: true,
               expandedHeight: 250,
               flexibleSpace: ClipRRect(
@@ -77,17 +92,6 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                 child: Column(
                   children: [
                     SizedBox(height: MediaQuery.of(context).padding.top + 20),
-                    const Text(
-                      "Mahatma Ghandhi",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(height: 5),
-                    const Text(
-                      "Toleration specialist",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    const SizedBox(height: 25),
-                    const SizedBox(height: 10),
                     ListTile(
                       onTap: () {},
                       leading: const Text("Edit profile"),
@@ -95,7 +99,10 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                     ListTile(
                       onTap: () {},
                       leading: const Text("Language"),
-                      trailing: const Text("English"),
+                      trailing: const Text(
+                        "English",
+                        style: TextStyle(fontWeight: FontWeight.w200),
+                      ),
                     ),
                     ExpansionTile(
                       title: const Text("Themes"),

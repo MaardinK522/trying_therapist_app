@@ -37,6 +37,12 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
   }
 
   @override
+  void didPopNext() {
+    updateItems();
+    super.didPopNext();
+  }
+
+  @override
   void dispose() {
     timer.cancel();
     _streamController.close();
