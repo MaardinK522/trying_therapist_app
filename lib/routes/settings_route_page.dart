@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:therapist_side/routes/signup_route_page.dart';
+import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
 
 import '../generated/assets.dart';
 import '../main.dart';
@@ -219,7 +221,12 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
               ),
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  CustomFadeTransition(page: const SignupPageRoute()),
+                );
+              },
               title: const Text("Logout"),
               trailing: const Icon(Icons.logout_rounded),
             ),

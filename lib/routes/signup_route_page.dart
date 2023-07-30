@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:therapist_side/generated/assets.dart';
+import 'package:therapist_side/utils/constant_dims.dart';
+
 import '../routes/home_page_route.dart';
 
 class SignupPageRoute extends StatelessWidget {
@@ -13,154 +15,185 @@ class SignupPageRoute extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 100),
-                const Text(
-                  "Signup",
-                  style: TextStyle(fontSize: 30),
-                  textAlign: TextAlign.center,
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 100),
+              const Text(
+                "PHYZZICARE",
+                style: TextStyle(fontSize: 30),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 70),
+              TextFormField(
+                textInputAction: TextInputAction.next,
+                autofillHints: const [AutofillHints.email],
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: Constants.textFieldBorderRadius,
+                    borderSide: const BorderSide(
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: Constants.textFieldBorderRadius,
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                    ),
+                  ),
+                  hintText: "Email",
                 ),
-                const SizedBox(height: 70),
-                TextFormField(
-                  autofillHints: const [AutofillHints.email],
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          width: 1,
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                obscureText: true,
+                autofillHints: const [AutofillHints.password],
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    style: const ButtonStyle(
+                        splashFactory:
+                            InkSparkle.constantTurbulenceSeedSplashFactory),
+                    onPressed: () {},
+                    icon: const Icon(Icons.visibility_rounded),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: Constants.textFieldBorderRadius,
+                    borderSide: const BorderSide(
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: Constants.textFieldBorderRadius,
+                    borderSide: BorderSide(
+                      width: 2,
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                    ),
+                  ),
+                  hintText: "Password",
+                ),
+              ),
+              const SizedBox(height: 30),
+              const Expanded(
+                child: Center(
+                  child: Text(
+                    "------ Or ------",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    onTap: () {},
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: Constants.textFieldBorderRadius,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              Assets.assetsFacebook,
+                              fit: BoxFit.fill,
+                              height: iconSize + 10,
+                              width: iconSize + 10,
+                            ),
+                            Expanded(
+                              child: Text(
+                                "FaceBook",
+                                style: TextStyle(fontSize: iconSize - 6),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Theme.of(context).colorScheme.primaryContainer,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  InkWell(
+                    customBorder: const RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                    onTap: () {},
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: Constants.textFieldBorderRadius,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              Assets.assetsGoogle,
+                              fit: BoxFit.fill,
+                              height: iconSize + 10,
+                              width: iconSize + 10,
+                            ),
+                            Expanded(
+                              child: Text(
+                                "Google",
+                                style: TextStyle(fontSize: iconSize - 5),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      hintText: "Email"),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  obscureText: true,
-                  autofillHints: const [AutofillHints.password],
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      style: const ButtonStyle(
-                          splashFactory:
-                              InkSparkle.constantTurbulenceSeedSplashFactory),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: FilledButton.tonal(
+                      style: ButtonStyle(
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) => const MyHomePage(),
+                          ),
+                        );
+                      },
+                      child: const Text("Login"),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: FilledButton.tonal(
+                      style: ButtonStyle(
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
                       onPressed: () {},
-                      icon: const Icon(Icons.visibility_rounded),
+                      child: const Text("Signup"),
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        width: 1,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                      ),
-                    ),
-                    hintText: "Password",
-                  ),
-                ),
-                const SizedBox(height: 30),
-                const Text(
-                  "------ Or ------",
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 30),
-                InkWell(
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () {},
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            Assets.assetsFacebook,
-                            fit: BoxFit.fill,
-                            height: iconSize + 10,
-                            width: iconSize + 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              "FaceBook",
-                              style: TextStyle(fontSize: iconSize - 6),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                InkWell(
-                  customBorder: const RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.blue, width: 2),
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () {},
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            Assets.assetsGoogle,
-                            fit: BoxFit.fill,
-                            height: iconSize + 10,
-                            width: iconSize + 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              "Google",
-                              style: TextStyle(fontSize: iconSize - 5),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    Expanded(
-                      child: FilledButton.tonal(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (ctx) => const MyHomePage(),
-                            ),
-                          );
-                        },
-                        child: const Text("Login"),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: FilledButton.tonal(
-                        onPressed: () {},
-                        child: const Text("Signup"),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 10),
+            ],
           ),
         ),
       ),

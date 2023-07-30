@@ -5,7 +5,7 @@ class MedicineGroupItemModel {
   @Id(assignable: true)
   int id = 0;
   final String topic;
-  final List<String> medicines;
+  late List<String> medicines;
   bool? isExpanded;
 
   MedicineGroupItemModel({

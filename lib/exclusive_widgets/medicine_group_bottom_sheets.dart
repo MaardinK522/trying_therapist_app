@@ -27,10 +27,7 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
   @override
   void initState() {
     topicNameTextController.text = widget.item.topic;
-    if (widget.item.medicines.isNotEmpty) {
-      medicineChipsList = widget.item.medicines;
-      wasEmpty = true;
-    }
+    medicineChipsList.addAll(widget.item.medicines);
     super.initState();
   }
 
@@ -147,15 +144,13 @@ class _MedicineGroupBottomSheetsState extends State<MedicineGroupBottomSheets> {
                 Expanded(
                   child: FilledButton.tonal(
                     onPressed: () {
-                      if (topicNameTextController.text.isNotEmpty) {
-                        widget.item.medicines.addAll(medicineChipsList);
-                        Provider.of<MedicineGroupListViewProvider>(context,
-                                listen: false)
-                            .addItemToList(
-                          widget.item,
-                        );
-                        Navigator.pop(context);
-                      }
+                      widget.item.medicines = medicineChipsList;
+                      Provider.of<MedicineGroupListViewProvider>(context,
+                              listen: false)
+                          .addItemToList(
+                        widget.item,
+                      );
+                      Navigator.pop(context);
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

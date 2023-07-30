@@ -55,6 +55,7 @@ class Assets {
       'lib/transitions_effect/bottom_sheets_translate_animation.dart';
   static const String transitionsEffectCustomFadeTransition =
       'lib/transitions_effect/custom_fade_transition.dart';
+  static const String utilsConstantDims = 'lib/utils/constant_dims.dart';
   static const String utilsDatabase = 'lib/utils/database.dart';
   static const String utilsThemeColor = 'lib/utils/theme_color.dart';
   static const String windowsCallHistoryWindow =

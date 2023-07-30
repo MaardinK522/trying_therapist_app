@@ -89,9 +89,38 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "6:7635442384589216836",
+      "lastPropertyId": "4:3082582995115494336",
+      "name": "ChatMessage",
+      "properties": [
+        {
+          "id": "1:8235838757525207354",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:1627407459020442323",
+          "name": "message",
+          "type": 9
+        },
+        {
+          "id": "3:2059243689362122987",
+          "name": "isSent",
+          "type": 1
+        },
+        {
+          "id": "4:3082582995115494336",
+          "name": "time",
+          "type": 10
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "5:8904754258716067804",
+  "lastEntityId": "6:7635442384589216836",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

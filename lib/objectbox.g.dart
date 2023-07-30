@@ -16,6 +16,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/call_history_item_model.dart';
 import 'models/chat_history_item_model.dart';
+import 'models/chat_message_model.dart';
 import 'models/medicine_course_item_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
@@ -107,6 +108,35 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(6, 7635442384589216836),
+      name: 'ChatMessage',
+      lastPropertyId: const IdUid(4, 3082582995115494336),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8235838757525207354),
+            name: 'id',
+            type: 6,
+            flags: 129),
+        ModelProperty(
+            id: const IdUid(2, 1627407459020442323),
+            name: 'message',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 2059243689362122987),
+            name: 'isSent',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 3082582995115494336),
+            name: 'time',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -130,7 +160,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(5, 8904754258716067804),
+      lastEntityId: const IdUid(6, 7635442384589216836),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -256,6 +286,39 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
+        }),
+    ChatMessage: EntityDefinition<ChatMessage>(
+        model: _entities[3],
+        toOneRelations: (ChatMessage object) => [],
+        toManyRelations: (ChatMessage object) => {},
+        getId: (ChatMessage object) => object.id,
+        setId: (ChatMessage object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ChatMessage object, fb.Builder fbb) {
+          final messageOffset = fbb.writeString(object.message);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, messageOffset);
+          fbb.addBool(2, object.isSent);
+          fbb.addInt64(3, object.time.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = ChatMessage(
+              time: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              message: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              isSent:
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
         })
   };
 
@@ -317,4 +380,23 @@ class ChatHistoryItemModel_ {
   /// see [ChatHistoryItemModel.unReadText]
   static final unReadText =
       QueryIntegerProperty<ChatHistoryItemModel>(_entities[2].properties[4]);
+}
+
+/// [ChatMessage] entity fields to define ObjectBox queries.
+class ChatMessage_ {
+  /// see [ChatMessage.id]
+  static final id =
+      QueryIntegerProperty<ChatMessage>(_entities[3].properties[0]);
+
+  /// see [ChatMessage.message]
+  static final message =
+      QueryStringProperty<ChatMessage>(_entities[3].properties[1]);
+
+  /// see [ChatMessage.isSent]
+  static final isSent =
+      QueryBooleanProperty<ChatMessage>(_entities[3].properties[2]);
+
+  /// see [ChatMessage.time]
+  static final time =
+      QueryIntegerProperty<ChatMessage>(_entities[3].properties[3]);
 }
