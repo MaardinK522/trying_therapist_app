@@ -18,57 +18,31 @@ import 'models/call_history_item_model.dart';
 import 'models/chat_history_item_model.dart';
 import 'models/chat_message_model.dart';
 import 'models/medicine_course_item_model.dart';
+import 'models/person_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(3, 8027214234248683554),
-      name: 'MedicineGroupItemModel',
-      lastPropertyId: const IdUid(4, 1379912020908502164),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 5138091674674432502),
-            name: 'id',
-            type: 6,
-            flags: 129),
-        ModelProperty(
-            id: const IdUid(2, 8827034760457528428),
-            name: 'topic',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 9029017546592320138),
-            name: 'medicines',
-            type: 30,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 1379912020908502164),
-            name: 'isExpanded',
-            type: 1,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(4, 9073091288297953078),
+      id: const IdUid(1, 7703886569829070493),
       name: 'CallHistoryItemModel',
-      lastPropertyId: const IdUid(3, 4525596011742575970),
+      lastPropertyId: const IdUid(3, 4985205864062700765),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 6346513096194227888),
+            id: const IdUid(1, 7738963634258874619),
             name: 'id',
             type: 6,
             flags: 129),
         ModelProperty(
-            id: const IdUid(2, 3662792875235403304),
-            name: 'personName',
-            type: 9,
-            flags: 0),
+            id: const IdUid(2, 5501281317812093265),
+            name: 'personId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(1, 8332485934080759440),
+            relationTarget: 'PersonModel'),
         ModelProperty(
-            id: const IdUid(3, 4525596011742575970),
+            id: const IdUid(3, 4985205864062700765),
             name: 'calledTime',
             type: 10,
             flags: 0)
@@ -76,33 +50,33 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(5, 8904754258716067804),
+      id: const IdUid(2, 8474309904558187538),
       name: 'ChatHistoryItemModel',
-      lastPropertyId: const IdUid(5, 5191764943854953692),
+      lastPropertyId: const IdUid(5, 1328572237440923966),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 1616304233415431096),
+            id: const IdUid(1, 4512996407153693507),
             name: 'id',
             type: 6,
             flags: 129),
         ModelProperty(
-            id: const IdUid(2, 5349548446453258095),
-            name: 'personName',
-            type: 9,
+            id: const IdUid(2, 396919661756051089),
+            name: 'personID',
+            type: 6,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 2368944319401154011),
-            name: 'lastTextTime',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 8802005419694245521),
+            id: const IdUid(3, 8445455461213523405),
             name: 'lastText',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 5191764943854953692),
+            id: const IdUid(4, 5507701263160530457),
+            name: 'lastTextTime',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 1328572237440923966),
             name: 'unReadText',
             type: 6,
             flags: 0)
@@ -110,28 +84,96 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(6, 7635442384589216836),
-      name: 'ChatMessage',
-      lastPropertyId: const IdUid(4, 3082582995115494336),
+      id: const IdUid(3, 8418888330398408512),
+      name: 'MedicineGroupItemModel',
+      lastPropertyId: const IdUid(4, 6462917045315071146),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 8235838757525207354),
+            id: const IdUid(1, 8036147386778926445),
             name: 'id',
             type: 6,
             flags: 129),
         ModelProperty(
-            id: const IdUid(2, 1627407459020442323),
+            id: const IdUid(2, 4396109511118650824),
+            name: 'topic',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 176947839514377399),
+            name: 'medicines',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6462917045315071146),
+            name: 'isExpanded',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(4, 2785553090534984994),
+      name: 'PersonModel',
+      lastPropertyId: const IdUid(5, 5240508565070614833),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 3852306123280296916),
+            name: 'id',
+            type: 6,
+            flags: 129),
+        ModelProperty(
+            id: const IdUid(2, 1423697639794799141),
+            name: 'personName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 7341658634045085315),
+            name: 'personAge',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 4874954373303593039),
+            name: 'personGender',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 5240508565070614833),
+            name: 'personLocation',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(5, 4553746437165866143),
+      name: 'SentMessage',
+      lastPropertyId: const IdUid(5, 3311408451931014689),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1507475010742055451),
+            name: 'id',
+            type: 6,
+            flags: 129),
+        ModelProperty(
+            id: const IdUid(2, 8427627516854768770),
+            name: 'sendersID',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 5928749666152375696),
             name: 'message',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 2059243689362122987),
+            id: const IdUid(4, 3929870795710823419),
             name: 'isSent',
             type: 1,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 3082582995115494336),
+            id: const IdUid(5, 3311408451931014689),
             name: 'time',
             type: 10,
             flags: 0)
@@ -160,29 +202,88 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(6, 7635442384589216836),
-      lastIndexId: const IdUid(0, 0),
+      lastEntityId: const IdUid(5, 4553746437165866143),
+      lastIndexId: const IdUid(2, 5408436424868035677),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [8650434618452904353, 6145695837408192305],
-      retiredIndexUids: const [],
-      retiredPropertyUids: const [
-        8347654834679933989,
-        7173028985818334418,
-        6327909229550554017,
-        7294565735257676444,
-        6021933507435462884,
-        816372526415688392,
-        1729858640080741063
-      ],
+      retiredEntityUids: const [],
+      retiredIndexUids: const [5408436424868035677],
+      retiredPropertyUids: const [],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    MedicineGroupItemModel: EntityDefinition<MedicineGroupItemModel>(
+    CallHistoryItemModel: EntityDefinition<CallHistoryItemModel>(
         model: _entities[0],
+        toOneRelations: (CallHistoryItemModel object) => [object.person],
+        toManyRelations: (CallHistoryItemModel object) => {},
+        getId: (CallHistoryItemModel object) => object.id,
+        setId: (CallHistoryItemModel object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CallHistoryItemModel object, fb.Builder fbb) {
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.person.targetId);
+          fbb.addInt64(2, object.calledTime.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = CallHistoryItemModel(
+              DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          object.person.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          object.person.attach(store);
+          return object;
+        }),
+    ChatHistoryItemModel: EntityDefinition<ChatHistoryItemModel>(
+        model: _entities[1],
+        toOneRelations: (ChatHistoryItemModel object) => [],
+        toManyRelations: (ChatHistoryItemModel object) => {},
+        getId: (ChatHistoryItemModel object) => object.id,
+        setId: (ChatHistoryItemModel object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ChatHistoryItemModel object, fb.Builder fbb) {
+          final lastTextOffset = fbb.writeString(object.lastText);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.personID);
+          fbb.addOffset(2, lastTextOffset);
+          fbb.addInt64(3, object.lastTextTime?.millisecondsSinceEpoch);
+          fbb.addInt64(4, object.unReadText);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final lastTextTimeValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
+          final object = ChatHistoryItemModel(
+              personID:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
+              lastTextTime: lastTextTimeValue == null
+                  ? null
+                  : DateTime.fromMillisecondsSinceEpoch(lastTextTimeValue),
+              lastText: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              unReadText:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
+        }),
+    MedicineGroupItemModel: EntityDefinition<MedicineGroupItemModel>(
+        model: _entities[2],
         toOneRelations: (MedicineGroupItemModel object) => [],
         toManyRelations: (MedicineGroupItemModel object) => {},
         getId: (MedicineGroupItemModel object) => object.id,
@@ -218,90 +319,59 @@ ModelDefinition getObjectBoxModel() {
 
           return object;
         }),
-    CallHistoryItemModel: EntityDefinition<CallHistoryItemModel>(
-        model: _entities[1],
-        toOneRelations: (CallHistoryItemModel object) => [],
-        toManyRelations: (CallHistoryItemModel object) => {},
-        getId: (CallHistoryItemModel object) => object.id,
-        setId: (CallHistoryItemModel object, int id) {
+    PersonModel: EntityDefinition<PersonModel>(
+        model: _entities[3],
+        toOneRelations: (PersonModel object) => [],
+        toManyRelations: (PersonModel object) => {},
+        getId: (PersonModel object) => object.id,
+        setId: (PersonModel object, int id) {
           object.id = id;
         },
-        objectToFB: (CallHistoryItemModel object, fb.Builder fbb) {
+        objectToFB: (PersonModel object, fb.Builder fbb) {
           final personNameOffset = fbb.writeString(object.personName);
-          fbb.startTable(4);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, personNameOffset);
-          fbb.addInt64(2, object.calledTime.millisecondsSinceEpoch);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = CallHistoryItemModel(
-              personName: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              calledTime: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)))
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-
-          return object;
-        }),
-    ChatHistoryItemModel: EntityDefinition<ChatHistoryItemModel>(
-        model: _entities[2],
-        toOneRelations: (ChatHistoryItemModel object) => [],
-        toManyRelations: (ChatHistoryItemModel object) => {},
-        getId: (ChatHistoryItemModel object) => object.id,
-        setId: (ChatHistoryItemModel object, int id) {
-          object.id = id;
-        },
-        objectToFB: (ChatHistoryItemModel object, fb.Builder fbb) {
-          final personNameOffset = fbb.writeString(object.personName);
-          final lastTextOffset = fbb.writeString(object.lastText);
+          final personLocationOffset = fbb.writeString(object.personLocation);
           fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, personNameOffset);
-          fbb.addInt64(2, object.lastTextTime?.millisecondsSinceEpoch);
-          fbb.addOffset(3, lastTextOffset);
-          fbb.addInt64(4, object.unReadText);
+          fbb.addInt64(2, object.personAge);
+          fbb.addBool(3, object.personGender);
+          fbb.addOffset(4, personLocationOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final lastTextTimeValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
-          final object = ChatHistoryItemModel(
+
+          final object = PersonModel(
               personName: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
-              lastTextTime: lastTextTimeValue == null
-                  ? null
-                  : DateTime.fromMillisecondsSinceEpoch(lastTextTimeValue),
-              lastText: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              unReadText:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0))
+              personAge:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0),
+              personGender: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 10, false),
+              personLocation: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
         }),
-    ChatMessage: EntityDefinition<ChatMessage>(
-        model: _entities[3],
-        toOneRelations: (ChatMessage object) => [],
-        toManyRelations: (ChatMessage object) => {},
-        getId: (ChatMessage object) => object.id,
-        setId: (ChatMessage object, int id) {
+    SentMessage: EntityDefinition<SentMessage>(
+        model: _entities[4],
+        toOneRelations: (SentMessage object) => [],
+        toManyRelations: (SentMessage object) => {},
+        getId: (SentMessage object) => object.id,
+        setId: (SentMessage object, int id) {
           object.id = id;
         },
-        objectToFB: (ChatMessage object, fb.Builder fbb) {
+        objectToFB: (SentMessage object, fb.Builder fbb) {
           final messageOffset = fbb.writeString(object.message);
-          fbb.startTable(5);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
-          fbb.addOffset(1, messageOffset);
-          fbb.addBool(2, object.isSent);
-          fbb.addInt64(3, object.time.millisecondsSinceEpoch);
+          fbb.addInt64(1, object.sendersID);
+          fbb.addOffset(2, messageOffset);
+          fbb.addBool(3, object.isSent);
+          fbb.addInt64(4, object.time.millisecondsSinceEpoch);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -309,13 +379,15 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = ChatMessage(
+          final object = SentMessage(
               time: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)),
               message: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              isSent:
-                  const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false))
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              isSent: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 10, false),
+              sendersID:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -325,78 +397,105 @@ ModelDefinition getObjectBoxModel() {
   return ModelDefinition(model, bindings);
 }
 
-/// [MedicineGroupItemModel] entity fields to define ObjectBox queries.
-class MedicineGroupItemModel_ {
-  /// see [MedicineGroupItemModel.id]
-  static final id =
-      QueryIntegerProperty<MedicineGroupItemModel>(_entities[0].properties[0]);
-
-  /// see [MedicineGroupItemModel.topic]
-  static final topic =
-      QueryStringProperty<MedicineGroupItemModel>(_entities[0].properties[1]);
-
-  /// see [MedicineGroupItemModel.medicines]
-  static final medicines = QueryStringVectorProperty<MedicineGroupItemModel>(
-      _entities[0].properties[2]);
-
-  /// see [MedicineGroupItemModel.isExpanded]
-  static final isExpanded =
-      QueryBooleanProperty<MedicineGroupItemModel>(_entities[0].properties[3]);
-}
-
 /// [CallHistoryItemModel] entity fields to define ObjectBox queries.
 class CallHistoryItemModel_ {
   /// see [CallHistoryItemModel.id]
   static final id =
-      QueryIntegerProperty<CallHistoryItemModel>(_entities[1].properties[0]);
+      QueryIntegerProperty<CallHistoryItemModel>(_entities[0].properties[0]);
 
-  /// see [CallHistoryItemModel.personName]
-  static final personName =
-      QueryStringProperty<CallHistoryItemModel>(_entities[1].properties[1]);
+  /// see [CallHistoryItemModel.person]
+  static final person = QueryRelationToOne<CallHistoryItemModel, PersonModel>(
+      _entities[0].properties[1]);
 
   /// see [CallHistoryItemModel.calledTime]
   static final calledTime =
-      QueryIntegerProperty<CallHistoryItemModel>(_entities[1].properties[2]);
+      QueryIntegerProperty<CallHistoryItemModel>(_entities[0].properties[2]);
 }
 
 /// [ChatHistoryItemModel] entity fields to define ObjectBox queries.
 class ChatHistoryItemModel_ {
   /// see [ChatHistoryItemModel.id]
   static final id =
-      QueryIntegerProperty<ChatHistoryItemModel>(_entities[2].properties[0]);
+      QueryIntegerProperty<ChatHistoryItemModel>(_entities[1].properties[0]);
 
-  /// see [ChatHistoryItemModel.personName]
-  static final personName =
-      QueryStringProperty<ChatHistoryItemModel>(_entities[2].properties[1]);
-
-  /// see [ChatHistoryItemModel.lastTextTime]
-  static final lastTextTime =
-      QueryIntegerProperty<ChatHistoryItemModel>(_entities[2].properties[2]);
+  /// see [ChatHistoryItemModel.personID]
+  static final personID =
+      QueryIntegerProperty<ChatHistoryItemModel>(_entities[1].properties[1]);
 
   /// see [ChatHistoryItemModel.lastText]
   static final lastText =
-      QueryStringProperty<ChatHistoryItemModel>(_entities[2].properties[3]);
+      QueryStringProperty<ChatHistoryItemModel>(_entities[1].properties[2]);
+
+  /// see [ChatHistoryItemModel.lastTextTime]
+  static final lastTextTime =
+      QueryIntegerProperty<ChatHistoryItemModel>(_entities[1].properties[3]);
 
   /// see [ChatHistoryItemModel.unReadText]
   static final unReadText =
-      QueryIntegerProperty<ChatHistoryItemModel>(_entities[2].properties[4]);
+      QueryIntegerProperty<ChatHistoryItemModel>(_entities[1].properties[4]);
 }
 
-/// [ChatMessage] entity fields to define ObjectBox queries.
-class ChatMessage_ {
-  /// see [ChatMessage.id]
+/// [MedicineGroupItemModel] entity fields to define ObjectBox queries.
+class MedicineGroupItemModel_ {
+  /// see [MedicineGroupItemModel.id]
   static final id =
-      QueryIntegerProperty<ChatMessage>(_entities[3].properties[0]);
+      QueryIntegerProperty<MedicineGroupItemModel>(_entities[2].properties[0]);
 
-  /// see [ChatMessage.message]
+  /// see [MedicineGroupItemModel.topic]
+  static final topic =
+      QueryStringProperty<MedicineGroupItemModel>(_entities[2].properties[1]);
+
+  /// see [MedicineGroupItemModel.medicines]
+  static final medicines = QueryStringVectorProperty<MedicineGroupItemModel>(
+      _entities[2].properties[2]);
+
+  /// see [MedicineGroupItemModel.isExpanded]
+  static final isExpanded =
+      QueryBooleanProperty<MedicineGroupItemModel>(_entities[2].properties[3]);
+}
+
+/// [PersonModel] entity fields to define ObjectBox queries.
+class PersonModel_ {
+  /// see [PersonModel.id]
+  static final id =
+      QueryIntegerProperty<PersonModel>(_entities[3].properties[0]);
+
+  /// see [PersonModel.personName]
+  static final personName =
+      QueryStringProperty<PersonModel>(_entities[3].properties[1]);
+
+  /// see [PersonModel.personAge]
+  static final personAge =
+      QueryIntegerProperty<PersonModel>(_entities[3].properties[2]);
+
+  /// see [PersonModel.personGender]
+  static final personGender =
+      QueryBooleanProperty<PersonModel>(_entities[3].properties[3]);
+
+  /// see [PersonModel.personLocation]
+  static final personLocation =
+      QueryStringProperty<PersonModel>(_entities[3].properties[4]);
+}
+
+/// [SentMessage] entity fields to define ObjectBox queries.
+class SentMessage_ {
+  /// see [SentMessage.id]
+  static final id =
+      QueryIntegerProperty<SentMessage>(_entities[4].properties[0]);
+
+  /// see [SentMessage.sendersID]
+  static final sendersID =
+      QueryIntegerProperty<SentMessage>(_entities[4].properties[1]);
+
+  /// see [SentMessage.message]
   static final message =
-      QueryStringProperty<ChatMessage>(_entities[3].properties[1]);
+      QueryStringProperty<SentMessage>(_entities[4].properties[2]);
 
-  /// see [ChatMessage.isSent]
+  /// see [SentMessage.isSent]
   static final isSent =
-      QueryBooleanProperty<ChatMessage>(_entities[3].properties[2]);
+      QueryBooleanProperty<SentMessage>(_entities[4].properties[3]);
 
-  /// see [ChatMessage.time]
+  /// see [SentMessage.time]
   static final time =
-      QueryIntegerProperty<ChatMessage>(_entities[3].properties[3]);
+      QueryIntegerProperty<SentMessage>(_entities[4].properties[4]);
 }

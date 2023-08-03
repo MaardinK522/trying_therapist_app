@@ -35,7 +35,7 @@ class CallHistoryListItemView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.personName,
+                  item.person.target!.personName,
                   style: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.w500),
                   overflow: TextOverflow.ellipsis,

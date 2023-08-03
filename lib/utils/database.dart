@@ -1,7 +1,8 @@
-import 'package:path_provider/path_provider.dart';
-import 'package:therapist_side/models/chat_history_item_model.dart';
-import 'package:therapist_side/objectbox.g.dart';
 import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
+import 'package:therapist_side/objectbox.g.dart';
+
+import '../models/person_model.dart';
 
 class Database {
   late final Store _store;
@@ -24,13 +25,17 @@ class Database {
     _store.box<T>().remove(id);
   }
 
-  List<ChatHistoryItemModel> doesChatHistoryItemExists(name) {
-    Query<ChatHistoryItemModel> query = _store
-        .box<ChatHistoryItemModel>()
-        .query(ChatHistoryItemModel_.personName.equals(name))
+  List<PersonModel> doesChatHistoryItemExists(name) {
+    Query<PersonModel> query = _store
+        .box<PersonModel>()
+        .query(PersonModel_.personName.equals(name))
         .build();
     var items = query.find();
     query.close();
     return items;
+  }
+
+  T? getItem<T>(int id) {
+    return _store.box<T>().get(id);
   }
 }

@@ -1,40 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:therapist_side/generated/assets.dart';
+import 'package:therapist_side/main.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/models/chat_message_model.dart';
+import 'package:therapist_side/models/person_model.dart';
+import 'package:therapist_side/providers/person_providers.dart';
 import 'package:therapist_side/routes/patient_details_page_route.dart';
 
-class PatientChatPageRoute extends StatefulWidget {
+class ChatPageRoute extends StatefulWidget {
   final ChatHistoryItemModel item;
   final int index;
 
-  const PatientChatPageRoute({
+  const ChatPageRoute({
     super.key,
     required this.item,
     required this.index,
   });
 
   @override
-  State<PatientChatPageRoute> createState() => _PatientChatPageRouteState();
+  State<ChatPageRoute> createState() => _ChatPageRouteState();
 }
 
-class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
-  List<ChatMessage> chatItems = [
-    ChatMessage(
-      time: DateTime.now(),
-      message: "Jai mata dii",
-      isSent: true,
-    ),
-    ChatMessage(
-      time: DateTime.now(),
-      message: "Hello",
-    ),
-  ];
+class _ChatPageRouteState extends State<ChatPageRoute> {
+  List<SentMessage> chatItems = [];
   TextEditingController chatTextController = TextEditingController();
   late Color menuItemColor =
       (Theme.of(context).colorScheme.brightness == Brightness.dark)
           ? Colors.white
           : Colors.black;
+  late PersonModel person;
+
+  @override
+  void initState() {
+    Provider.of<PersonProvider>(context, listen: false)
+        .getPerson(widget.item.id)
+        .then((person) {
+      this.person = person!;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +70,7 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Text(widget.item.personName),
+                  child: Text(person.personName),
                 ),
               ],
             ),
@@ -131,10 +136,11 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                                 if (chatTextController.text.isNotEmpty) {
                                   chatItems.insert(
                                     0,
-                                    ChatMessage(
+                                    SentMessage(
                                       time: DateTime.now(),
                                       message: chatTextController.text,
                                       isSent: true,
+                                      sendersID: person.id,
                                     ),
                                   );
                                   chatTextController.clear();
@@ -147,9 +153,11 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                                   setState(() {
                                     chatItems.insert(
                                       0,
-                                      ChatMessage(
+                                      SentMessage(
                                         time: DateTime.now(),
                                         message: chatTextController.text,
+                                        sendersID:
+                                            MyApp.of(context)?.currentUser,
                                       ),
                                     );
                                     chatTextController.clear();
@@ -234,7 +242,7 @@ class _PatientChatPageRouteState extends State<PatientChatPageRoute> {
                 builder: (context) => PatientProfilePageRoute(
                   index: widget.index,
                   patientImage: Assets.assetsGhandi,
-                  patientName: widget.item.personName,
+                  patientName: person.personName,
                 ),
               ),
             );

@@ -12,6 +12,8 @@ class Assets {
   static const String libMain = 'lib/main.dart';
   static const String libObjectbox = 'lib/objectbox.g.dart';
   static const String libObjectboxModel = 'lib/objectbox-model.json';
+  static const String libRoutesSignupRoutePage =
+      'lib/routes/signup_route_page.dart';
   static const String listItemViewsAppointmentListView =
       'lib/list_item_views/appointment_list_view.dart';
   static const String listItemViewsCallHistoryListviewItem =
@@ -28,12 +30,15 @@ class Assets {
       'lib/models/chat_message_model.dart';
   static const String modelsMedicineCourseItemModel =
       'lib/models/medicine_course_item_model.dart';
+  static const String modelsPersonModel = 'lib/models/person_model.dart';
   static const String providersCallHistoryProvider =
       'lib/providers/call_history_provider.dart';
   static const String providersChatHistoryProvider =
       'lib/providers/chat_history_provider.dart';
   static const String providersMedicineListviewProvider =
       'lib/providers/medicine_listview_provider.dart';
+  static const String providersPersonProviders =
+      'lib/providers/person_providers.dart';
   static const String routesCallPatientPageRoute =
       'lib/routes/call_patient_page_route.dart';
   static const String routesChatPageRoute = 'lib/routes/chat_page_route.dart';

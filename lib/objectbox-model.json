@@ -4,52 +4,26 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "3:8027214234248683554",
-      "lastPropertyId": "4:1379912020908502164",
-      "name": "MedicineGroupItemModel",
-      "properties": [
-        {
-          "id": "1:5138091674674432502",
-          "name": "id",
-          "type": 6,
-          "flags": 129
-        },
-        {
-          "id": "2:8827034760457528428",
-          "name": "topic",
-          "type": 9
-        },
-        {
-          "id": "3:9029017546592320138",
-          "name": "medicines",
-          "type": 30
-        },
-        {
-          "id": "4:1379912020908502164",
-          "name": "isExpanded",
-          "type": 1
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "4:9073091288297953078",
-      "lastPropertyId": "3:4525596011742575970",
+      "id": "1:7703886569829070493",
+      "lastPropertyId": "3:4985205864062700765",
       "name": "CallHistoryItemModel",
       "properties": [
         {
-          "id": "1:6346513096194227888",
+          "id": "1:7738963634258874619",
           "name": "id",
           "type": 6,
           "flags": 129
         },
         {
-          "id": "2:3662792875235403304",
-          "name": "personName",
-          "type": 9
+          "id": "2:5501281317812093265",
+          "name": "personId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:8332485934080759440",
+          "relationTarget": "PersonModel"
         },
         {
-          "id": "3:4525596011742575970",
+          "id": "3:4985205864062700765",
           "name": "calledTime",
           "type": 10
         }
@@ -57,33 +31,33 @@
       "relations": []
     },
     {
-      "id": "5:8904754258716067804",
-      "lastPropertyId": "5:5191764943854953692",
+      "id": "2:8474309904558187538",
+      "lastPropertyId": "5:1328572237440923966",
       "name": "ChatHistoryItemModel",
       "properties": [
         {
-          "id": "1:1616304233415431096",
+          "id": "1:4512996407153693507",
           "name": "id",
           "type": 6,
           "flags": 129
         },
         {
-          "id": "2:5349548446453258095",
-          "name": "personName",
-          "type": 9
+          "id": "2:396919661756051089",
+          "name": "personID",
+          "type": 6
         },
         {
-          "id": "3:2368944319401154011",
-          "name": "lastTextTime",
-          "type": 10
-        },
-        {
-          "id": "4:8802005419694245521",
+          "id": "3:8445455461213523405",
           "name": "lastText",
           "type": 9
         },
         {
-          "id": "5:5191764943854953692",
+          "id": "4:5507701263160530457",
+          "name": "lastTextTime",
+          "type": 10
+        },
+        {
+          "id": "5:1328572237440923966",
           "name": "unReadText",
           "type": 6
         }
@@ -91,28 +65,96 @@
       "relations": []
     },
     {
-      "id": "6:7635442384589216836",
-      "lastPropertyId": "4:3082582995115494336",
-      "name": "ChatMessage",
+      "id": "3:8418888330398408512",
+      "lastPropertyId": "4:6462917045315071146",
+      "name": "MedicineGroupItemModel",
       "properties": [
         {
-          "id": "1:8235838757525207354",
+          "id": "1:8036147386778926445",
           "name": "id",
           "type": 6,
           "flags": 129
         },
         {
-          "id": "2:1627407459020442323",
+          "id": "2:4396109511118650824",
+          "name": "topic",
+          "type": 9
+        },
+        {
+          "id": "3:176947839514377399",
+          "name": "medicines",
+          "type": 30
+        },
+        {
+          "id": "4:6462917045315071146",
+          "name": "isExpanded",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:2785553090534984994",
+      "lastPropertyId": "5:5240508565070614833",
+      "name": "PersonModel",
+      "properties": [
+        {
+          "id": "1:3852306123280296916",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:1423697639794799141",
+          "name": "personName",
+          "type": 9
+        },
+        {
+          "id": "3:7341658634045085315",
+          "name": "personAge",
+          "type": 6
+        },
+        {
+          "id": "4:4874954373303593039",
+          "name": "personGender",
+          "type": 1
+        },
+        {
+          "id": "5:5240508565070614833",
+          "name": "personLocation",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:4553746437165866143",
+      "lastPropertyId": "5:3311408451931014689",
+      "name": "SentMessage",
+      "properties": [
+        {
+          "id": "1:1507475010742055451",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:8427627516854768770",
+          "name": "sendersID",
+          "type": 6
+        },
+        {
+          "id": "3:5928749666152375696",
           "name": "message",
           "type": 9
         },
         {
-          "id": "3:2059243689362122987",
+          "id": "4:3929870795710823419",
           "name": "isSent",
           "type": 1
         },
         {
-          "id": "4:3082582995115494336",
+          "id": "5:3311408451931014689",
           "name": "time",
           "type": 10
         }
@@ -120,26 +162,17 @@
       "relations": []
     }
   ],
-  "lastEntityId": "6:7635442384589216836",
-  "lastIndexId": "0:0",
+  "lastEntityId": "5:4553746437165866143",
+  "lastIndexId": "2:5408436424868035677",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [
-    8650434618452904353,
-    6145695837408192305
+  "retiredEntityUids": [],
+  "retiredIndexUids": [
+    5408436424868035677
   ],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [
-    8347654834679933989,
-    7173028985818334418,
-    6327909229550554017,
-    7294565735257676444,
-    6021933507435462884,
-    816372526415688392,
-    1729858640080741063
-  ],
+  "retiredPropertyUids": [],
   "retiredRelationUids": [],
   "version": 1
 }

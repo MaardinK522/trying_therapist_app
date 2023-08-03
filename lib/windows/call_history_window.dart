@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:therapist_side/providers/call_history_provider.dart';
@@ -47,40 +46,28 @@ class _CallHistoryPageRouteState extends State<CallHistoryPageRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onLongPress: () {
-        var faker = Faker();
-        var item = CallHistoryItemModel(
-          personName: faker.person.name(),
-          calledTime: faker.date.dateTime(),
-        );
-        Provider.of<CallHistoryItemProvider>(context, listen: false)
-            .addItemToList(item);
-        resetStream();
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: StreamBuilder<List<CallHistoryItemModel>>(
-          stream: _streamController.stream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return CallHistoryListItemView(
-                    index: index,
-                    item: snapshot.data![index],
-                  );
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('${snapshot.error}'),
-              );
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: StreamBuilder<List<CallHistoryItemModel>>(
+        stream: _streamController.stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data?.length,
+              itemBuilder: (context, index) {
+                return CallHistoryListItemView(
+                  index: index,
+                  item: snapshot.data![index],
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('${snapshot.error}'),
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }

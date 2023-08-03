@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 
 import '../list_item_views/appointment_list_view.dart';
 
+/// This route displays the
 class PatientAppointmentsPageRoute extends StatefulWidget {
   const PatientAppointmentsPageRoute({
     Key? key,
@@ -43,10 +43,11 @@ class _PatientAppointmentsPageRouteState
               child: Row(
                 children: [
                   const Expanded(
-                      child: Text(
-                    "Appointment count: ",
-                    style: TextStyle(fontSize: 20),
-                  )),
+                    child: Text(
+                      "Appointment count: ",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
                   Text(
                     "$appointmentCount",
                     style: const TextStyle(fontSize: 20),
@@ -66,10 +67,10 @@ class _PatientAppointmentsPageRouteState
                         return AppointListItemView(
                           index: index,
                           item: ChatHistoryItemModel(
-                            lastTextTime: null,
-                            personName: Faker().person.name(),
-                            lastText: '',
                             unReadText: 0,
+                            lastText: 'Something',
+                            lastTextTime: DateTime.now(),
+                            personID: 0,
                           ),
                           personMessage:
                               'I have headache from so many days did not shown to any doctor.',

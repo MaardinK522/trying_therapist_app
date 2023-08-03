@@ -45,6 +45,8 @@ class MyAppState extends State<MyApp> {
 
   get seedColor => _seedColor;
 
+  get currentUser => -125;
+
   setSavedSeedColor() {
     SharedPreferences.getInstance().then(
       (pref) {

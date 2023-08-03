@@ -1,8 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:therapist_side/generated/assets.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
+import 'package:therapist_side/models/person_model.dart';
+import 'package:therapist_side/providers/person_providers.dart';
 
 import '../routes/chat_page_route.dart';
 
@@ -26,6 +29,16 @@ class ChatPageRouteListItemView extends StatefulWidget {
 }
 
 class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
+  late PersonModel person;
+
+  @override
+  void initState() {
+    Provider.of<PersonProvider>(context, listen: false)
+        .getPerson(widget.item.personID)
+        .then((person) => this.person = person!);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     int newMessageCount = Random().nextInt(10);
@@ -36,7 +49,7 @@ class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
           Navigator.push(
             this.context,
             MaterialPageRoute(
-              builder: (context) => PatientChatPageRoute(
+              builder: (context) => ChatPageRoute(
                 index: widget.tagIndex,
                 item: widget.item,
               ),
@@ -69,7 +82,7 @@ class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.item.personName,
+                      person.personName,
                       style: const TextStyle(
                         fontSize: 20,
                         overflow: TextOverflow.ellipsis,

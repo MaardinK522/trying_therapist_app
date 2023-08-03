@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:therapist_side/main.dart';
+import 'package:therapist_side/models/person_model.dart';
 
 import '../models/chat_history_item_model.dart';
 
@@ -21,6 +22,6 @@ class ChatHistoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<ChatHistoryItemModel> doesExists(String name) =>
+  List<PersonModel> doesExists(String name) =>
       database.doesChatHistoryItemExists(name);
 }

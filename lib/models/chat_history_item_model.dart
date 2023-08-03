@@ -4,14 +4,16 @@ import 'package:objectbox/objectbox.dart';
 class ChatHistoryItemModel {
   @Id(assignable: true)
   int id = 0;
-  String personName;
+
+  int personID;
+
   String lastText;
   @Property(type: PropertyType.date)
   DateTime? lastTextTime;
   int unReadText;
 
   ChatHistoryItemModel({
-    required this.personName,
+    required this.personID,
     required this.lastTextTime,
     required this.lastText,
     required this.unReadText,

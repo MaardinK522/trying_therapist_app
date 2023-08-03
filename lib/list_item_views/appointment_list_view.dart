@@ -1,3 +1,4 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -30,16 +31,17 @@ class AppointListItemView extends StatefulWidget {
 class _AppointListItemViewState extends State<AppointListItemView> {
   final indicatorTextStyle = const TextStyle(fontSize: 20);
 
-  late ChatHistoryProvider provider =
+  late final ChatHistoryProvider _chatHistoryProvider =
       Provider.of<ChatHistoryProvider>(context, listen: false);
 
   @override
-  void dispose() {
-    super.dispose();
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var faker = Faker();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Container(
@@ -53,6 +55,7 @@ class _AppointListItemViewState extends State<AppointListItemView> {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
                 height: 50,
@@ -65,7 +68,7 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                       context,
                       CustomFadeTransition(
                         page: PatientProfilePageRoute(
-                          patientName: widget.item.personName,
+                          patientName: faker.person.name(),
                           patientImage: Assets.assetsGhandi,
                           index: widget.index,
                         ),
@@ -86,11 +89,11 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                     ),
                   ),
                   title: Hero(
-                    tag: "${widget.item.personName}${widget.index}",
+                    tag: "${faker.person.name()}${widget.index}",
                     child: Material(
                       type: MaterialType.transparency,
                       child: Text(
-                        widget.item.personName,
+                        faker.person.name(),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: const TextStyle(fontSize: 20),
@@ -99,7 +102,7 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 50),
               Expanded(
                 child: SingleChildScrollView(
                   child: Text(
@@ -119,20 +122,25 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                     ),
                     onPressed: () {
                       ChatHistoryItemModel item = ChatHistoryItemModel(
-                        personName: widget.item.personName,
                         lastTextTime: DateTime.now(),
                         lastText: '',
                         unReadText: 0,
+                        personID: -12,
                       );
                       bool foundOne = false;
-                      for (var val in provider.doesExists(item.personName)) {
-                        if (val.personName == item.personName) foundOne = true;
+                      for (var val in _chatHistoryProvider
+                          .doesExists(faker.person.name())) {
+                        if (val.personName == faker.person.name()) {
+                          foundOne = true;
+                        }
                       }
-                      if (!foundOne) provider.addItemToList(item, context);
+                      if (!foundOne) {
+                        _chatHistoryProvider.addItemToList(item, context);
+                      }
                       Navigator.push(
                         context,
                         CustomFadeTransition(
-                          page: PatientChatPageRoute(
+                          page: ChatPageRoute(
                             index: 0,
                             item: widget.item,
                           ),
