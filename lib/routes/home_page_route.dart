@@ -90,10 +90,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           child: Center(
             child: IconButton(
               onPressed: () {
-                Fluttertoast.showToast(
-                    msg: "These feature is under development");
+                Navigator.push(
+                  context,
+                  CustomFadeTransition(
+                    page: const PatientAppointmentsPageRoute(),
+                  ),
+                );
               },
-              icon: const Icon(Icons.notifications_rounded),
+              icon: const Icon(Icons.calendar_month_rounded),
             ),
           ),
         ),
@@ -111,13 +115,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
               );
             }
-            if (value == "appointments") {
-              Navigator.push(
-                context,
-                CustomFadeTransition(
-                  page: const PatientAppointmentsPageRoute(),
-                ),
-              );
+            if (value == "notifications") {
+              Fluttertoast.showToast(msg: "These feature is under development");
             }
             if (value == "settings") {
               Navigator.push(
@@ -152,15 +151,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
               ),
               PopupMenuItem(
-                value: "appointments",
+                value: "notifications",
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(
-                      Icons.calendar_month_rounded,
+                      Icons.notifications_rounded,
                       color: menuItemColor,
                     ),
-                    const Text("APPOINTMENTS")
+                    const Text("NOTIFICATIONS")
                   ],
                 ),
               ),
