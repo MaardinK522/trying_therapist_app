@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:therapist_side/routes/signup_route_page.dart';
 import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
 
-import '../generated/assets.dart';
+import '../gen/assets.gen.dart';
 import '../main.dart';
 import '../utils/theme_color.dart';
 
@@ -22,18 +22,24 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
     MyThemeColor(Colors.red, false),
     MyThemeColor(Colors.blue, false),
   ];
+  var colorItemKey = GlobalKey<_SettingsRoutePageState>();
+  late List<String>? appFontFamilies;
 
   @override
   void initState() {
     for (var item in themeColors) {
       if (item.color == MyApp.of(context)?.seedColor) item.isSelected = true;
     }
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    appFontFamilies = MyApp.of(context)?.appFamilies;
+    appFontFamilies?.sort((a, b) {
+      return a.toLowerCase().compareTo(b.toLowerCase());
+    });
+
     if (MyApp.of(context)?.appThemeMode == ThemeMode.light) {
       _selected = "Light";
     } else if (MyApp.of(context)?.appThemeMode == ThemeMode.dark) {
@@ -66,7 +72,7 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                   ),
                 ],
               ),
-              floating: true,
+              forceElevated: true,
               expandedHeight: 250,
               flexibleSpace: ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -74,7 +80,7 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                   bottomLeft: Radius.circular(20),
                 ),
                 child: Image.asset(
-                  Assets.assetsGhandi,
+                  Assets.images.ghandi.path,
                   height: double.maxFinite,
                   width: double.maxFinite,
                   fit: BoxFit.cover,
@@ -105,6 +111,9 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                       ),
                     ),
                     ExpansionTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       title: const Text("Themes"),
                       children: [
                         Padding(
@@ -164,6 +173,7 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                               ),
                               const SizedBox(height: 10),
                               Row(
+                                key: colorItemKey,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: themeColors
@@ -217,10 +227,32 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                                     )
                                     .toList(),
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 20),
                             ],
                           ),
-                        )
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: appFontFamilies!
+                              .map<Widget>(
+                                (fontFamily) => FilledButton.tonal(
+                                  onPressed: () {
+                                    MyApp.of(context)!
+                                        .setFontFamily(fontFamily);
+                                  },
+                                  style: ButtonStyle(
+                                    shape: MaterialStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                  ),
+                                  child: Text(fontFamily),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   ],

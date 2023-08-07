@@ -20,176 +20,173 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   late final TabController _tabController = TabController(
-    length: items.length,
+    length: _items.length,
     vsync: this,
     initialIndex: 1,
   );
-  static const textStyle = TextStyle(fontSize: 15);
-  static const items = [
-    "CALLS",
-    "PATIENTS",
-    "MEDICINES",
-  ];
 
-  static const routes = [
-    CallHistoryPageRoute(),
-    ChatHistoryWindow(),
+  final _routes = const [
     MedicineCoursePageWindow(),
+    ChatHistoryWindow(),
+    CallHistoryPageRoute(),
   ];
 
   final TextEditingController searchTextFormFieldController =
-  TextEditingController();
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(DefaultTextStyle.of(context).style.fontFamily);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("TherapistSide"),
-        bottom: TabBar(
-          splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
-          indicatorColor: Theme
-              .of(context)
-              .colorScheme
-              .primary,
-          controller: _tabController,
-          isScrollable: true,
-          indicatorSize: TabBarIndicatorSize.label,
-          tabs: items
-              .map<Widget>(
-                (item) =>
-                Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(item, style: textStyle)),
-          )
-              .toList(),
+        title: const Text(
+          "TherapistSide",
+          style: TextStyle(fontSize: 20),
         ),
-        actions: _buildActions,
+        bottom: _tabBar,
+        actions: _actions,
       ),
       body: TabBarView(
         controller: _tabController,
-        children: routes,
+        children: _routes,
       ),
     );
   }
 
-  get _buildActions =>
-      [
-        IconButton(
-          icon: const Icon(
-            Icons.search_rounded,
-          ),
-          onPressed: () {
-            setState(() {
-              Navigator.push(
-                context,
-                CustomFadeTransition(
-                  page: const SearchPageRoute(),
-                ),
-              );
-            });
-          },
-        ),
-        badges.Badge(
-          position: badges.BadgePosition.topEnd(top: 5, end: 5),
-          showBadge: true,
-          child: Center(
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CustomFadeTransition(
-                    page: const PatientAppointmentsPageRoute(),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.calendar_month_rounded),
+  late final _tabBar = TabBar(
+    indicator: BoxDecoration(
+      shape: BoxShape.rectangle,
+      borderRadius: BorderRadiusDirectional.circular(10),
+    ),
+    indicatorColor: Theme.of(context).colorScheme.primary,
+    controller: _tabController,
+    tabs: _items
+        .map<Widget>(
+          (item) => Padding(
+            padding: const EdgeInsets.all(10),
+            child: Icon(
+              item,
             ),
           ),
-        ),
-        PopupMenuButton(
-          icon: const Icon(
-            Icons.more_vert,
-            color: Colors.white,
+        )
+        .toList(),
+  );
+
+  final _items = [
+    Icons.medical_information_rounded,
+    Icons.home,
+    Icons.call_rounded,
+  ];
+
+  late final _actions = [
+    IconButton(
+      icon: const Icon(
+        Icons.search_rounded,
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          CustomFadeTransition(
+            page: const SearchPageRoute(),
           ),
-          onSelected: (value) {
-            if (value == "scan") {
-              Navigator.push(
-                context,
-                CustomFadeTransition(
-                  page: const ScanPageRoute(),
-                ),
-              );
-            }
-            if (value == "notifications") {
-              Fluttertoast.showToast(msg: "These feature is under development");
-            }
-            if (value == "settings") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsRoutePage(),
-                ),
-              );
-            }
+        );
+      },
+    ),
+    badges.Badge(
+      position: badges.BadgePosition.topEnd(top: 5, end: 5),
+      showBadge: true,
+      child: Center(
+        child: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              CustomFadeTransition(
+                page: const PatientAppointmentsPageRoute(),
+              ),
+            );
           },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          color: Theme
-              .of(context)
-              .colorScheme
-              .secondaryContainer,
-          itemBuilder: (context) {
-            var menuItemColor =
-            (Theme
-                .of(context)
-                .colorScheme
-                .brightness == Brightness.dark)
+          icon: const Icon(Icons.calendar_month_rounded),
+        ),
+      ),
+    ),
+    PopupMenuButton(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      icon: const Icon(
+        Icons.more_vert,
+        color: Colors.white,
+      ),
+      onSelected: (value) {
+        if (value == "scan") {
+          Navigator.push(
+            context,
+            CustomFadeTransition(
+              page: const ScanPageRoute(),
+            ),
+          );
+        }
+        if (value == "notifications") {
+          Fluttertoast.showToast(msg: "These feature is under development");
+        }
+        if (value == "settings") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SettingsRoutePage(),
+            ),
+          );
+        }
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      itemBuilder: (context) {
+        var menuItemColor =
+            (Theme.of(context).colorScheme.brightness == Brightness.dark)
                 ? Colors.white
                 : Colors.black;
-            return [
-              PopupMenuItem(
-                value: "scan",
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.qr_code_scanner_rounded,
-                      color: menuItemColor,
-                    ),
-                    const Text("SCAN QR")
-                  ],
+        return [
+          PopupMenuItem(
+            value: "scan",
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  Icons.qr_code_scanner_rounded,
+                  color: menuItemColor,
                 ),
-              ),
-              PopupMenuItem(
-                value: "notifications",
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.notifications_rounded,
-                      color: menuItemColor,
-                    ),
-                    const Text("NOTIFICATIONS")
-                  ],
+                const Text("SCAN QR")
+              ],
+            ),
+          ),
+          PopupMenuItem(
+            value: "notifications",
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  Icons.notifications_rounded,
+                  color: menuItemColor,
                 ),
-              ),
-              PopupMenuItem(
-                value: "settings",
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.settings_rounded,
-                      color: menuItemColor,
-                    ),
-                    const Text("SETTINGS")
-                  ],
+                const Text("NOTIFICATIONS")
+              ],
+            ),
+          ),
+          PopupMenuItem(
+            value: "settings",
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  Icons.settings_rounded,
+                  color: menuItemColor,
                 ),
-              ),
-            ];
-          },
-        )
-      ].toList();
+                const Text("SETTINGS")
+              ],
+            ),
+          ),
+        ];
+      },
+    )
+  ].toList();
 }

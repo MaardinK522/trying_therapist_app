@@ -2,13 +2,12 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:therapist_side/gen/assets.gen.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/providers/chat_history_provider.dart';
 import 'package:therapist_side/routes/chat_page_route.dart';
 import 'package:therapist_side/routes/patient_details_page_route.dart';
 import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
-
-import '../generated/assets.dart';
 
 class AppointListItemView extends StatefulWidget {
   final int index;
@@ -69,7 +68,7 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                       CustomFadeTransition(
                         page: PatientProfilePageRoute(
                           patientName: faker.person.name(),
-                          patientImage: Assets.assetsGhandi,
+                          patientImage: Assets.images.ghandi.path,
                           index: widget.index,
                         ),
                       ),
@@ -79,9 +78,9 @@ class _AppointListItemViewState extends State<AppointListItemView> {
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Hero(
-                      tag: "${Assets.assetsGhandi}${widget.index}",
+                      tag: "${Assets.images.ghandi.path}${widget.index}",
                       child: Image.asset(
-                        Assets.assetsGhandi,
+                        Assets.images.ghandi.path,
                         height: 50,
                         width: 50,
                         fit: BoxFit.cover,

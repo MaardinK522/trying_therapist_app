@@ -28,13 +28,19 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.0.0
   objectbox_generator: any
-
+  flutter_gen_runner: 5.3.1
 flutter:
   uses-material-design: true
+  fonts:
+    - family: GoogleSans
+      fonts:
+        - asset: fonts/google_sans_regular.ttf
+    - family: Arimo
+      fonts:
+        - asset: fonts/arimo_regular.ttf
   assets:
-    - assets/ghandi.jpeg
-    - assets/indian_map.jpg
-    - assets/facebook.png
-    - assets/google.png
-    - lib/models/
-    - lib/routes/signup_route_page.dart
+    - assets/
+    - assets/images/
+
+
+

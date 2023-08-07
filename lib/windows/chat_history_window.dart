@@ -58,10 +58,10 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
       child: Scaffold(
         body: StreamBuilder<List<ChatHistoryItemModel>>(
           stream: _streamController.stream,
-          builder: (BuildContext context,
-              AsyncSnapshot<List<ChatHistoryItemModel>> snapshot) {
+          builder: (BuildContext context, snapshot) {
             if (snapshot.hasData) {
               return ListView.separated(
+                itemCount: snapshot.data!.length,
                 padding: const EdgeInsets.only(top: 10),
                 itemBuilder: (context, index) {
                   return ChatPageRouteListItemView(
@@ -77,7 +77,6 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
                     item: snapshot.data![index],
                   );
                 },
-                itemCount: snapshot.data!.length,
                 separatorBuilder: (BuildContext context, int index) {
                   return const Divider(
                     height: 20,

@@ -158,11 +158,6 @@ final _entities = <ModelEntity>[
             type: 6,
             flags: 129),
         ModelProperty(
-            id: const IdUid(2, 8427627516854768770),
-            name: 'sendersID',
-            type: 6,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(3, 5928749666152375696),
             name: 'message',
             type: 9,
@@ -208,7 +203,7 @@ ModelDefinition getObjectBoxModel() {
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [5408436424868035677],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [8427627516854768770],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -368,7 +363,6 @@ ModelDefinition getObjectBoxModel() {
           final messageOffset = fbb.writeString(object.message);
           fbb.startTable(6);
           fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.sendersID);
           fbb.addOffset(2, messageOffset);
           fbb.addBool(3, object.isSent);
           fbb.addInt64(4, object.time.millisecondsSinceEpoch);
@@ -385,9 +379,7 @@ ModelDefinition getObjectBoxModel() {
               message: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, ''),
               isSent: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 10, false),
-              sendersID:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0))
+                  .vTableGet(buffer, rootOffset, 10, false))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -483,19 +475,15 @@ class SentMessage_ {
   static final id =
       QueryIntegerProperty<SentMessage>(_entities[4].properties[0]);
 
-  /// see [SentMessage.sendersID]
-  static final sendersID =
-      QueryIntegerProperty<SentMessage>(_entities[4].properties[1]);
-
   /// see [SentMessage.message]
   static final message =
-      QueryStringProperty<SentMessage>(_entities[4].properties[2]);
+      QueryStringProperty<SentMessage>(_entities[4].properties[1]);
 
   /// see [SentMessage.isSent]
   static final isSent =
-      QueryBooleanProperty<SentMessage>(_entities[4].properties[3]);
+      QueryBooleanProperty<SentMessage>(_entities[4].properties[2]);
 
   /// see [SentMessage.time]
   static final time =
-      QueryIntegerProperty<SentMessage>(_entities[4].properties[4]);
+      QueryIntegerProperty<SentMessage>(_entities[4].properties[3]);
 }

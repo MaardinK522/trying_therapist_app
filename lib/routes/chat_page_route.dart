@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:therapist_side/generated/assets.dart';
-import 'package:therapist_side/main.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/models/chat_message_model.dart';
 import 'package:therapist_side/models/person_model.dart';
 import 'package:therapist_side/providers/person_providers.dart';
 import 'package:therapist_side/routes/patient_details_page_route.dart';
+
+import '../gen/assets.gen.dart';
 
 class ChatPageRoute extends StatefulWidget {
   final ChatHistoryItemModel item;
@@ -53,16 +53,16 @@ class _ChatPageRouteState extends State<ChatPageRoute> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Hero(
-                  tag: "${Assets.assetsGhandi}${widget.index}",
+                  tag: "${Assets.images.ghandi.path}${widget.index}",
                   child: ClipRect(
                     child: Container(
                       height: 50,
                       width: 50,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage(Assets.assetsGhandi),
+                          image: Assets.images.ghandi.provider(),
                         ),
                       ),
                     ),
@@ -140,7 +140,6 @@ class _ChatPageRouteState extends State<ChatPageRoute> {
                                       time: DateTime.now(),
                                       message: chatTextController.text,
                                       isSent: true,
-                                      sendersID: person.id,
                                     ),
                                   );
                                   chatTextController.clear();
@@ -156,8 +155,6 @@ class _ChatPageRouteState extends State<ChatPageRoute> {
                                       SentMessage(
                                         time: DateTime.now(),
                                         message: chatTextController.text,
-                                        sendersID:
-                                            MyApp.of(context)?.currentUser,
                                       ),
                                     );
                                     chatTextController.clear();
@@ -241,7 +238,7 @@ class _ChatPageRouteState extends State<ChatPageRoute> {
               MaterialPageRoute(
                 builder: (context) => PatientProfilePageRoute(
                   index: widget.index,
-                  patientImage: Assets.assetsGhandi,
+                  patientImage: Assets.images.ghandi.path,
                   patientName: person.personName,
                 ),
               ),

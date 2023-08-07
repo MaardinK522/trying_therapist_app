@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:therapist_side/generated/assets.dart';
 import 'package:therapist_side/utils/constant_dims.dart';
 
+import '../gen/assets.gen.dart';
 import '../routes/home_page_route.dart';
 
 class SignupPageRoute extends StatelessWidget {
@@ -46,6 +46,7 @@ class SignupPageRoute extends StatelessWidget {
                     ),
                   ),
                   hintText: "Email",
+                  hintStyle: const TextStyle(fontSize: 20),
                 ),
               ),
               const SizedBox(height: 20),
@@ -74,14 +75,16 @@ class SignupPageRoute extends StatelessWidget {
                     ),
                   ),
                   hintText: "Password",
+                  hintStyle: const TextStyle(fontSize: 20),
                 ),
               ),
               const SizedBox(height: 30),
               const Expanded(
                 child: Center(
                   child: Text(
-                    "------ Or ------",
+                    "--- Or ---",
                     textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
               ),
@@ -101,15 +104,15 @@ class SignupPageRoute extends StatelessWidget {
                         child: Row(
                           children: [
                             Image.asset(
-                              Assets.assetsFacebook,
+                              Assets.images.facebook.path,
                               fit: BoxFit.fill,
                               height: iconSize + 10,
                               width: iconSize + 10,
                             ),
-                            Expanded(
+                            const Expanded(
                               child: Text(
                                 "FaceBook",
-                                style: TextStyle(fontSize: iconSize - 6),
+                                style: TextStyle(fontSize: 20),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -134,15 +137,15 @@ class SignupPageRoute extends StatelessWidget {
                         child: Row(
                           children: [
                             Image.asset(
-                              Assets.assetsGoogle,
+                              Assets.images.google.path,
                               fit: BoxFit.fill,
                               height: iconSize + 10,
                               width: iconSize + 10,
                             ),
-                            Expanded(
+                            const Expanded(
                               child: Text(
                                 "Google",
-                                style: TextStyle(fontSize: iconSize - 5),
+                                style: TextStyle(fontSize: 20),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -159,6 +162,9 @@ class SignupPageRoute extends StatelessWidget {
                   Expanded(
                     child: FilledButton.tonal(
                       style: ButtonStyle(
+                        textStyle: const MaterialStatePropertyAll(
+                          TextStyle(fontSize: 20),
+                        ),
                         shape: MaterialStatePropertyAll(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
@@ -180,6 +186,9 @@ class SignupPageRoute extends StatelessWidget {
                   Expanded(
                     child: FilledButton.tonal(
                       style: ButtonStyle(
+                        textStyle: const MaterialStatePropertyAll(
+                          TextStyle(fontSize: 20),
+                        ),
                         shape: MaterialStatePropertyAll(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),

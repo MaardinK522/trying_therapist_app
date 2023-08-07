@@ -31,9 +31,16 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  final List<String> _appFontFamilies = [
+    "Roboto",
+    "GoogleSans",
+    "Arimo",
+  ];
+
+  late String _fontFamily = _appFontFamilies[0];
+
   Color _seedColor = Colors.green;
   ThemeMode _appThemeMode = ThemeMode.system;
-
   late ThemeData _lightTheme;
   late ThemeData _darkTheme;
 
@@ -45,7 +52,16 @@ class MyAppState extends State<MyApp> {
 
   get seedColor => _seedColor;
 
-  get currentUser => -125;
+  get currentFontFamily => _fontFamily;
+
+  List<String> get appFamilies => _appFontFamilies;
+
+  setFontFamily(String fontFamily) {
+    debugPrint(fontFamily);
+    setState(() {
+      _fontFamily = fontFamily;
+    });
+  }
 
   setSavedSeedColor() {
     SharedPreferences.getInstance().then(
@@ -71,12 +87,14 @@ class MyAppState extends State<MyApp> {
       },
     );
     _darkTheme = ThemeData(
+      fontFamily: _fontFamily,
       colorScheme: ColorScheme.fromSeed(
           seedColor: _seedColor,
           brightness: Brightness.dark,
           background: _seedColor),
     );
-    _lightTheme = ThemeData.from(
+    _lightTheme = ThemeData(
+      fontFamily: _fontFamily,
       colorScheme: ColorScheme.fromSeed(
         seedColor: _seedColor,
         brightness: Brightness.light,
@@ -145,19 +163,20 @@ class MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    super.initState();
     Timer(const Duration(seconds: 1), () {
       setState(() {
         setSavedSeedColor();
         setSavedThemeMode();
       });
     });
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     _lightTheme = ThemeData(
+      fontFamily: _fontFamily,
       colorScheme: ColorScheme.fromSeed(
         seedColor: _seedColor,
         brightness: Brightness.light,
@@ -168,6 +187,7 @@ class MyAppState extends State<MyApp> {
         seedColor: _seedColor,
         brightness: Brightness.dark,
       ),
+      fontFamily: _fontFamily,
     );
     return MultiProvider(
       providers: itemProvider,

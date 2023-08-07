@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../generated/assets.dart';
+
+import '../gen/assets.gen.dart';
 
 class CallPatientPageRoute extends StatefulWidget {
   final String patientName;
@@ -33,7 +34,7 @@ class _CallPatientPageRouteState extends State<CallPatientPageRoute> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(500),
                 child: Image.asset(
-                  Assets.assetsGhandi,
+                  Assets.images.ghandi.path,
                   height: 200,
                   width: 200,
                   fit: BoxFit.cover,

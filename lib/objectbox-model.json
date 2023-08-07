@@ -139,11 +139,6 @@
           "flags": 129
         },
         {
-          "id": "2:8427627516854768770",
-          "name": "sendersID",
-          "type": 6
-        },
-        {
           "id": "3:5928749666152375696",
           "name": "message",
           "type": 9
@@ -172,7 +167,9 @@
   "retiredIndexUids": [
     5408436424868035677
   ],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    8427627516854768770
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

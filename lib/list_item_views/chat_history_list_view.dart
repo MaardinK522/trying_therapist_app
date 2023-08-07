@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:therapist_side/generated/assets.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/models/person_model.dart';
 import 'package:therapist_side/providers/person_providers.dart';
 
+import '../gen/assets.gen.dart';
 import '../routes/chat_page_route.dart';
 
 class ChatPageRouteListItemView extends StatefulWidget {
@@ -68,7 +68,7 @@ class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Image.asset(
-                    Assets.assetsGhandi,
+                    Assets.images.ghandi.path,
                     fit: BoxFit.cover,
                     height: 50,
                     width: 50,
