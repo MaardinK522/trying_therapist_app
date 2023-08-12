@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:therapist_side/routes/signup_route_page.dart';
+import 'package:therapist_side/routes/login_route_page.dart';
 import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
 
 import '../gen/assets.gen.dart';
@@ -263,7 +263,7 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
               onTap: () {
                 Navigator.pushReplacement(
                   context,
-                  CustomFadeTransition(page: const SignupPageRoute()),
+                  CustomFadeTransition(page: const LoginPageRoute()),
                 );
               },
               title: const Text("Logout"),

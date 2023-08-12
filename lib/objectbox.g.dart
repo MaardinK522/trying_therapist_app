@@ -177,7 +177,13 @@ final _entities = <ModelEntity>[
       backlinks: <ModelBacklink>[])
 ];
 
-/// Open an ObjectBox store with the model declared in this file.
+/// Shortcut for [Store.new] that passes [getObjectBoxModel] and for Flutter
+/// apps by default a [directory] using `defaultStoreDirectory()` from the
+/// ObjectBox Flutter library.
+///
+/// Note: for desktop apps it is recommended to specify a unique [directory].
+///
+/// See [Store.new] for an explanation of all parameters.
 Future<Store> openStore(
         {String? directory,
         int? maxDBSizeInKB,
@@ -193,7 +199,8 @@ Future<Store> openStore(
         queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
         macosApplicationGroup: macosApplicationGroup);
 
-/// ObjectBox model definition, pass it to [Store] - Store(getObjectBoxModel())
+/// Returns the ObjectBox model definition for this project for use with
+/// [Store.new].
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
@@ -229,10 +236,9 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
-          final object = CallHistoryItemModel(
-              DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)))
+          final calledTimeParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+          final object = CallHistoryItemModel(calledTimeParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.person.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
@@ -263,16 +269,20 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
           final lastTextTimeValue =
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
+          final personIDParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final lastTextTimeParam = lastTextTimeValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(lastTextTimeValue);
+          final lastTextParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final unReadTextParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           final object = ChatHistoryItemModel(
-              personID:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
-              lastTextTime: lastTextTimeValue == null
-                  ? null
-                  : DateTime.fromMillisecondsSinceEpoch(lastTextTimeValue),
-              lastText: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              unReadText:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0))
+              personID: personIDParam,
+              lastTextTime: lastTextTimeParam,
+              lastText: lastTextParam,
+              unReadText: unReadTextParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -300,16 +310,18 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
+          final topicParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final medicinesParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 8, []);
+          final isExpandedParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 10);
           final object = MedicineGroupItemModel(
-              topic: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              medicines: const fb.ListReader<String>(
-                      fb.StringReader(asciiOptimization: true),
-                      lazy: false)
-                  .vTableGet(buffer, rootOffset, 8, []),
-              isExpanded: const fb.BoolReader()
-                  .vTableGetNullable(buffer, rootOffset, 10))
+              topic: topicParam,
+              medicines: medicinesParam,
+              isExpanded: isExpandedParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -337,16 +349,20 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
+          final personNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final personAgeParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final personGenderParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
+          final personLocationParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, '');
           final object = PersonModel(
-              personName: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              personAge:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0),
-              personGender: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 10, false),
-              personLocation: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''))
+              personName: personNameParam,
+              personAge: personAgeParam,
+              personGender: personGenderParam,
+              personLocation: personLocationParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -372,14 +388,14 @@ ModelDefinition getObjectBoxModel() {
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-
+          final timeParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0));
+          final messageParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final isSentParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
           final object = SentMessage(
-              time: DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0)),
-              message: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              isSent: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 10, false))
+              time: timeParam, message: messageParam, isSent: isSentParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;

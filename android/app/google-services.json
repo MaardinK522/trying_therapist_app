@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "641508843699",
+    "project_id": "therapstsideapp",
+    "storage_bucket": "therapstsideapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641508843699:android:79c10bd1a7bf79654790c6",
+        "android_client_info": {
+          "package_name": "com.example.therapist_side"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641508843699-njm4gpuumkorj2i7stphpt54bk5tvc25.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeB11ZIFfTbc9gaw895JC1LxAioC4yn7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641508843699-njm4gpuumkorj2i7stphpt54bk5tvc25.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "641508843699-9dt71nc3jt43hon1sggbnnil7u3ctrae.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.therapistSide"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

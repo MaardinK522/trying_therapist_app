@@ -26,10 +26,7 @@ class Database {
   }
 
   List<PersonModel> doesChatHistoryItemExists(name) {
-    Query<PersonModel> query = _store
-        .box<PersonModel>()
-        .query(PersonModel_.personName.equals(name))
-        .build();
+    Query<PersonModel> query = _store.box<PersonModel>().query(PersonModel_.personName.equals(name)).build();
     var items = query.find();
     query.close();
     return items;

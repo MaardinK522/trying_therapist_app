@@ -24,8 +24,7 @@ class ChatPageRouteListItemView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ChatPageRouteListItemView> createState() =>
-      _ChatPageRouteListItemViewState();
+  State<ChatPageRouteListItemView> createState() => _ChatPageRouteListItemViewState();
 }
 
 class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
@@ -33,9 +32,7 @@ class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
 
   @override
   void initState() {
-    Provider.of<PersonProvider>(context, listen: false)
-        .getPerson(widget.item.personID)
-        .then((person) => this.person = person!);
+    Provider.of<PersonProvider>(context, listen: false).getPerson(widget.item.personID).then((person) => this.person = person!);
     super.initState();
   }
 
@@ -78,8 +75,6 @@ class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       person.personName,
@@ -94,7 +89,6 @@ class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
                 ),
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
                     '${widget.item.lastTextTime?.hour}:${widget.item.lastTextTime?.minute}',
@@ -105,9 +99,7 @@ class _ChatPageRouteListItemViewState extends State<ChatPageRouteListItemView> {
                       : Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondaryContainer,
+                            color: Theme.of(context).colorScheme.secondaryContainer,
                           ),
                           child: Center(
                             child: Padding(
