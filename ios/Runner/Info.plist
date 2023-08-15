@@ -71,5 +71,15 @@
     <string>photos</string>
     <key>NSRemindersUsageDescription</key>
     <string>reminders</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+    	<dict>
+    		<key>CFBundleURLSchemes</key>
+    		<array>
+    			<string>com.googleusercontent.apps.641508843699-9dt71nc3jt43hon1sggbnnil7u3ctrae</string>
+    		</array>
+    	</dict>
+    </array>
+    <!-- End of the Google Sign-In section -->
 </dict>
 </plist>

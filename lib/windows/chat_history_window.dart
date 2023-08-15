@@ -5,8 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:therapist_side/models/chat_history_item_model.dart';
 import 'package:therapist_side/providers/chat_history_provider.dart';
 
-import '../list_item_views/chat_history_list_view.dart';
-
 class ChatHistoryWindow extends StatefulWidget {
   const ChatHistoryWindow({Key? key}) : super(key: key);
 
@@ -47,50 +45,50 @@ class ChatHistoryWindowState extends State<ChatHistoryWindow> with RouteAware {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        Provider.of<ChatHistoryProvider>(context, listen: false).updateAllChatHistoryItems();
+        // Provider.of<ChatHistoryProvider>(context, listen: false).updateAllChatHistoryItems();
       },
-      child: Scaffold(
-        body: Center(
-          child: StreamBuilder<List<ChatHistoryItemModel>>(
-            stream: _streamController.stream,
-            builder: (BuildContext context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  padding: const EdgeInsets.only(top: 20),
-                  itemCount: snapshot.data?.length,
-                  itemBuilder: (context, index) {
-                    return ChatPageRouteListItemView(
-                      patientImage: "assets/ghandi.jpeg",
-                      tagIndex: index,
-                      removeItem: () {
-                        setState(() {
-                          Provider.of<ChatHistoryProvider>(context, listen: false).deleteItem(snapshot.data![index].id);
-                          snapshot.data?.removeAt(index);
-                        });
-                      },
-                      item: snapshot.data![index],
-                    );
-                  },
-                  // separatorBuilder: (BuildContext context, int index) {
-                  //   return const Divider(
-                  //     height: 20,
-                  //     thickness: 1,
-                  //     color: Colors.grey,
-                  //   );
-                  // },
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text(snapshot.hasError.toString()),
-                );
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
+      child: const Scaffold(
+          // body: Center(
+          //   child: StreamBuilder<List<ChatHistoryItemModel>>(
+          //     stream: _streamController.stream,
+          //     builder: (BuildContext context, snapshot) {
+          //       if (snapshot.hasData) {
+          //         return ListView.builder(
+          //           padding: const EdgeInsets.only(top: 20),
+          //           itemCount: snapshot.data?.length,
+          //           itemBuilder: (context, index) {
+          //             return ChatPageRouteListItemView(
+          //               patientImage: "assets/ghandi.jpeg",
+          //               tagIndex: index,
+          //               removeItem: () {
+          //                 setState(() {
+          //                   Provider.of<ChatHistoryProvider>(context, listen: false).deleteItem(snapshot.data![index].id);
+          //                   snapshot.data?.removeAt(index);
+          //                 });
+          //               },
+          //               item: snapshot.data![index],
+          //             );
+          //           },
+          //           // separatorBuilder: (BuildContext context, int index) {
+          //           //   return const Divider(
+          //           //     height: 20,
+          //           //     thickness: 1,
+          //           //     color: Colors.grey,
+          //           //   );
+          //           // },
+          //         );
+          //       } else if (snapshot.hasError) {
+          //         return Center(
+          //           child: Text(snapshot.hasError.toString()),
+          //         );
+          //       }
+          //       return const Center(
+          //         child: CircularProgressIndicator(),
+          //       );
+          //     },
+          //   ),
+          // ),
           ),
-        ),
-      ),
     );
   }
 }

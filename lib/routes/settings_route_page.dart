@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:therapist_side/routes/login_route_page.dart';
+import 'package:therapist_side/routes/signup_page_route.dart';
 import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
+import 'package:therapist_side/utils/authentication.dart';
 
 import '../gen/assets.gen.dart';
 import '../main.dart';
@@ -132,8 +133,7 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                                     setState(() {
                                       _selected = value!;
                                     });
-                                    MyApp.of(context)
-                                        ?.changeThemeMode(ThemeMode.light);
+                                    MyApp.of(context)?.changeThemeMode(ThemeMode.light);
                                   },
                                 ),
                               ),
@@ -149,8 +149,7 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                                     setState(() {
                                       _selected = value!;
                                     });
-                                    MyApp.of(context)
-                                        ?.changeThemeMode(ThemeMode.dark);
+                                    MyApp.of(context)?.changeThemeMode(ThemeMode.dark);
                                   },
                                 ),
                               ),
@@ -166,24 +165,20 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                                     setState(() {
                                       _selected = value!;
                                     });
-                                    MyApp.of(context)
-                                        ?.changeThemeMode(ThemeMode.system);
+                                    MyApp.of(context)?.changeThemeMode(ThemeMode.system);
                                   },
                                 ),
                               ),
                               const SizedBox(height: 10),
                               Row(
                                 key: colorItemKey,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: themeColors
                                     .map<Widget>(
                                       (themeColorItem) => InkWell(
                                         onTap: () {
                                           setState(() {
-                                            MyApp.of(context)
-                                                ?.changeAppColorTheme(
-                                                    themeColorItem.color);
+                                            MyApp.of(context)?.changeAppColorTheme(themeColorItem.color);
                                             for (var element in themeColors) {
                                               element.isSelected = false;
                                             }
@@ -195,31 +190,19 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                                           height: 50,
                                           decoration: BoxDecoration(
                                             color: themeColorItem.color,
-                                            borderRadius:
-                                                BorderRadius.circular(500),
+                                            borderRadius: BorderRadius.circular(500),
                                             border: Border.all(
-                                              color: ((MyApp.of(context)
-                                                          ?.appThemeMode ==
-                                                      ThemeMode.light)
-                                                  ? MyApp.of(context)
-                                                      ?.darkTheme
-                                                      .colorScheme
-                                                      .background
-                                                  : MyApp.of(context)
-                                                      ?.lightTheme
-                                                      .colorScheme
-                                                      .background) as Color,
-                                              width: (themeColorItem.isSelected)
-                                                  ? 3
-                                                  : 0,
+                                              color: ((MyApp.of(context)?.appThemeMode == ThemeMode.light)
+                                                  ? MyApp.of(context)?.darkTheme.colorScheme.background
+                                                  : MyApp.of(context)?.lightTheme.colorScheme.background) as Color,
+                                              width: (themeColorItem.isSelected) ? 3 : 0,
                                             ),
                                           ),
                                           child: (themeColorItem.isSelected)
                                               ? const SizedBox(
                                                   height: 20,
                                                   width: 20,
-                                                  child:
-                                                      Icon(Icons.done_rounded),
+                                                  child: Icon(Icons.done_rounded),
                                                 )
                                               : const Center(),
                                         ),
@@ -237,8 +220,7 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                               .map<Widget>(
                                 (fontFamily) => FilledButton.tonal(
                                   onPressed: () {
-                                    MyApp.of(context)!
-                                        .setFontFamily(fontFamily);
+                                    MyApp.of(context)!.setFontFamily(fontFamily);
                                   },
                                   style: ButtonStyle(
                                     shape: MaterialStatePropertyAll(
@@ -261,9 +243,13 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
             ),
             ListTile(
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  CustomFadeTransition(page: const LoginPageRoute()),
+                Authentication.signOut(context: context).then(
+                  (value) {
+                    Navigator.pushReplacement(
+                      context,
+                      CustomFadeTransition(page: const SignupPageRoute()),
+                    );
+                  },
                 );
               },
               title: const Text("Logout"),

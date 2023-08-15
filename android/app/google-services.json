@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:641508843699:android:79c10bd1a7bf79654790c6",
+        "mobilesdk_app_id": "1:641508843699:android:2383f923c159b2c74790c6",
         "android_client_info": {
           "package_name": "com.example.therapist_side"
         }
       },
       "oauth_client": [
         {
-          "client_id": "641508843699-njm4gpuumkorj2i7stphpt54bk5tvc25.apps.googleusercontent.com",
+          "client_id": "641508843699-ldrjts8b46uq6v8mfssuec3civ73tf7c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +27,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "641508843699-njm4gpuumkorj2i7stphpt54bk5tvc25.apps.googleusercontent.com",
+              "client_id": "641508843699-ldrjts8b46uq6v8mfssuec3civ73tf7c.apps.googleusercontent.com",
               "client_type": 3
             },
             {

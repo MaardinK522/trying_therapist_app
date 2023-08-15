@@ -9,14 +9,14 @@ import 'package:therapist_side/firebase_options.dart';
 import 'package:therapist_side/providers/call_history_provider.dart';
 import 'package:therapist_side/providers/chat_history_provider.dart';
 import 'package:therapist_side/providers/medicine_listview_provider.dart';
-import 'package:therapist_side/routes/login_route_page.dart';
+import 'package:therapist_side/routes/signup_page_route.dart';
 
 import 'utils/database.dart';
 
 late Database database;
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   database = await Database.create();
   await Firebase.initializeApp(
@@ -34,7 +34,7 @@ class MyApp extends StatefulWidget {
   static MyAppState? of(BuildContext context) => context.findAncestorStateOfType<MyAppState>();
 }
 
-class MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final List<String> _appFontFamilies = [
     "Roboto",
     "GoogleSans",
@@ -154,12 +154,27 @@ class MyAppState extends State<MyApp> {
   void initState() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     Timer(const Duration(seconds: 1), () {
       setState(() {
         setSavedSeedColor();
         setSavedThemeMode();
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      _reInitFirebase();
+    }
   }
 
   @override
@@ -195,7 +210,7 @@ class MyAppState extends State<MyApp> {
         theme: _lightTheme,
         darkTheme: _darkTheme,
         themeMode: _appThemeMode,
-        home: const LoginPageRoute(),
+        home: const SignupPageRoute(),
         navigatorObservers: [
           routeObserver,
         ],
@@ -212,5 +227,11 @@ class MyAppState extends State<MyApp> {
   Future saveThemeMode(int mode) async {
     var pref = await SharedPreferences.getInstance();
     pref.setInt("theme_mode", mode);
+  }
+
+  void _reInitFirebase() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 }
