@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:therapist_side/exclusive_widgets/login_signup_button.dart';
 
@@ -27,34 +25,22 @@ class _SignupPageRouteState extends State<SignupPageRoute> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-                getRandomColor(),
-              ],
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 100),
-                const Text(
-                  "PHYZZICARE",
-                  style: TextStyle(fontSize: 30),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 100),
-                Center(
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 100),
+              const Text(
+                "PHYZZICARE",
+                style: TextStyle(fontSize: 30),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 100),
+              Expanded(
+                child: Center(
                   child: Text(
-                    "Being patient or patient an be hard sometimes.\n But no more suffering.",
+                    "Being patient can be hard sometimes.\nBut no more suffering.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
@@ -62,42 +48,29 @@ class _SignupPageRouteState extends State<SignupPageRoute> {
                     ),
                   ),
                 ),
-                const Expanded(
-                  child: Center(),
+              ),
+              SizedBox(
+                height: 100,
+                child: FutureBuilder(
+                  future: Authentication.initializerFirebase(context: context),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text("Error initializing Firebase");
+                    } else if (snapshot.connectionState == ConnectionState.done) {
+                      return const LoginSignUpButton();
+                    }
+                    return CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                    );
+                  },
                 ),
-                SizedBox(
-                  height: 100,
-                  child: FutureBuilder(
-                    future: Authentication.initializerFirebase(context: context),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return const Text("Error initializing Firebase");
-                      } else if (snapshot.connectionState == ConnectionState.done) {
-                        return const LoginSignUpButton();
-                      }
-                      return CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).colorScheme.primaryContainer,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
-    );
-  }
-
-  Color getRandomColor() {
-    var random = Random();
-    return Color.fromARGB(
-      random.nextInt(125),
-      random.nextInt(255),
-      random.nextInt(255),
-      random.nextInt(255),
     );
   }
 }

@@ -35,13 +35,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  final List<String> _appFontFamilies = [
-    "Roboto",
-    "GoogleSans",
-    "Arimo",
-  ];
-
-  late String _fontFamily = _appFontFamilies[0];
+  late String _fontFamily = "GoogleSans";
 
   Color _seedColor = Colors.green;
   ThemeMode _appThemeMode = ThemeMode.system;
@@ -58,10 +52,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   get currentFontFamily => _fontFamily;
 
-  List<String> get appFamilies => _appFontFamilies;
-
   setFontFamily(String fontFamily) {
-    debugPrint(fontFamily);
     setState(() {
       _fontFamily = fontFamily;
     });

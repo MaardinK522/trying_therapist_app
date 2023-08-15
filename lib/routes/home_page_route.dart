@@ -31,12 +31,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     CallHistoryPageRoute(),
   ];
 
-  final TextEditingController searchTextFormFieldController =
-      TextEditingController();
+  final TextEditingController searchTextFormFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(DefaultTextStyle.of(context).style.fontFamily);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -141,10 +139,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         borderRadius: BorderRadius.circular(20),
       ),
       itemBuilder: (context) {
-        var menuItemColor =
-            (Theme.of(context).colorScheme.brightness == Brightness.dark)
-                ? Colors.white
-                : Colors.black;
+        var menuItemColor = (Theme.of(context).colorScheme.brightness == Brightness.dark) ? Colors.white : Colors.black;
         return [
           PopupMenuItem(
             value: "scan",

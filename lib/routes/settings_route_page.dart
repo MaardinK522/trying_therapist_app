@@ -1,9 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:therapist_side/routes/signup_page_route.dart';
 import 'package:therapist_side/transitions_effect/custom_fade_transition.dart';
 import 'package:therapist_side/utils/authentication.dart';
 
-import '../gen/assets.gen.dart';
 import '../main.dart';
 import '../utils/theme_color.dart';
 
@@ -23,8 +23,12 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
     MyThemeColor(Colors.red, false),
     MyThemeColor(Colors.blue, false),
   ];
+  final List<String> appFontFamilies = [
+    "GoogleSans",
+    "Arimo",
+  ];
+
   var colorItemKey = GlobalKey<_SettingsRoutePageState>();
-  late List<String>? appFontFamilies;
 
   @override
   void initState() {
@@ -36,11 +40,6 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
 
   @override
   Widget build(BuildContext context) {
-    appFontFamilies = MyApp.of(context)?.appFamilies;
-    appFontFamilies?.sort((a, b) {
-      return a.toLowerCase().compareTo(b.toLowerCase());
-    });
-
     if (MyApp.of(context)?.appThemeMode == ThemeMode.light) {
       _selected = "Light";
     } else if (MyApp.of(context)?.appThemeMode == ThemeMode.dark) {
@@ -48,6 +47,10 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
     } else if (MyApp.of(context)?.appThemeMode == ThemeMode.system) {
       _selected = "System";
     }
+    appFontFamilies.sort((a, b) {
+      return a.toLowerCase().compareTo(b.toLowerCase());
+    });
+
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: true,
@@ -74,14 +77,14 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                 ],
               ),
               forceElevated: true,
-              expandedHeight: 250,
+              expandedHeight: MediaQuery.of(context).size.height * 0.5,
               flexibleSpace: ClipRRect(
                 borderRadius: const BorderRadius.only(
                   bottomRight: Radius.circular(20),
                   bottomLeft: Radius.circular(20),
                 ),
-                child: Image.asset(
-                  Assets.images.ghandi.path,
+                child: Image.network(
+                  FirebaseAuth.instance.currentUser!.photoURL!,
                   height: double.maxFinite,
                   width: double.maxFinite,
                   fit: BoxFit.cover,
@@ -95,7 +98,6 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                primary: true,
                 child: Column(
                   children: [
                     SizedBox(height: MediaQuery.of(context).padding.top + 20),
@@ -216,23 +218,34 @@ class _SettingsRoutePageState extends State<SettingsRoutePage> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: appFontFamilies!
-                              .map<Widget>(
-                                (fontFamily) => FilledButton.tonal(
-                                  onPressed: () {
-                                    MyApp.of(context)!.setFontFamily(fontFamily);
-                                  },
-                                  style: ButtonStyle(
-                                    shape: MaterialStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
+                          children: appFontFamilies.map<Widget>(
+                            (fontFamily) {
+                              bool isSelected = false;
+                              if (fontFamily == Theme.of(context).textTheme.bodyLarge!.fontFamily) isSelected = true;
+                              return FilledButton.tonal(
+                                onPressed: () {
+                                  MyApp.of(context)!.setFontFamily(fontFamily);
+                                },
+                                style: ButtonStyle(
+                                  textStyle: MaterialStatePropertyAll(
+                                    TextStyle(
+                                      fontFamily: fontFamily,
                                     ),
                                   ),
-                                  child: Text(fontFamily),
+                                  shape: MaterialStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                      side: BorderSide(
+                                        width: isSelected ? 2 : 0,
+                                        color: isSelected ? Theme.of(context).colorScheme.primary : Colors.transparent,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
                                 ),
-                              )
-                              .toList(),
+                                child: Text(fontFamily),
+                              );
+                            },
+                          ).toList(),
                         ),
                         const SizedBox(height: 10),
                       ],

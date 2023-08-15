@@ -34,12 +34,10 @@ class Authentication {
     final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-
       try {
         final UserCredential userCredential = await auth.signInWithCredential(credential);
         user = userCredential.user;
@@ -56,8 +54,9 @@ class Authentication {
           return null;
         }
       } catch (e) {
-        debugPrint("Invalid error occurred");
-        debugPrint(e.toString());
+        Authentication.customSnackBar(
+          content: 'Invalid error occurred',
+        );
         exit(exitCode);
       }
     }
